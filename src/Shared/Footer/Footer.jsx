@@ -1,16 +1,15 @@
 import { Footer } from "flowbite-react";
+import logo from '../../assets/logo/primecare-high-resolution-logo-transparent.png'
 
 const Foot = () => {
     return (
         <Footer container>
         <div className="w-full text-center">
           <div className="w-full justify-between sm:flex sm:items-center sm:justify-between">
-            <Footer.Brand
-              href="https://flowbite.com"
-              src="https://flowbite.com/docs/images/logo.svg"
-              alt="Flowbite Logo"
-              name="Flowbite"
-            />
+            <div className="flex items-center gap-5 text-xl text-orange-400 font-semibold">
+              <img src={logo} alt="" className="w-16"/>
+              <h1>PrimeCare</h1>
+            </div>
             <Footer.LinkGroup>
               <Footer.Link href="#">About</Footer.Link>
               <Footer.Link href="#">Privacy Policy</Footer.Link>
@@ -19,7 +18,7 @@ const Foot = () => {
             </Footer.LinkGroup>
           </div>
           <Footer.Divider />
-          <Footer.Copyright href="#" by="Flowbite™" year={2022} />
+          <Footer.Copyright href="#" by="PrimeCare" year={2024} />
         </div>
       </Footer>
     );

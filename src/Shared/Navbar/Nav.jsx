@@ -9,7 +9,7 @@ const Nav = () => {
       <Link to='/'>
       <Navbar.Brand >
         <img className="w-14 mr-4" src={logo} alt="Flowbite React Logo" />
-        <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">PrimeCare</span>
+        <span className="self-center whitespace-nowrap text-xl font-semibold text-orange-400">PrimeCare</span>
       </Navbar.Brand>
       </Link>
       
