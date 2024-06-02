@@ -1,8 +1,9 @@
+import Slider from "../Carousel/Carousel";
 
 const Home = () => {
     return (
         <div>
-            this is my home page
+         <Slider/>
            
         </div>
     );
