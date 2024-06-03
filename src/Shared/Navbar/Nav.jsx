@@ -1,8 +1,11 @@
 import { Avatar, Dropdown, Navbar } from "flowbite-react";
 import logo from '../../assets/logo/primecare-high-resolution-logo-transparent.png';
 import { Link, NavLink } from "react-router-dom";
+import UseAuth from "../../Components/Hooks/useAuth/useAuth";
 
 const Nav = () => {
+  const { logOut, user } = UseAuth();
+
   return (
     <Navbar fluid rounded className="fixed z-10 max-w-screen-xl mx-auto w-full bg-black bg-opacity-30">
       <div className="flex items-center">
@@ -12,24 +15,28 @@ const Nav = () => {
         </Link>
       </div>
 
-      <div className="flex md:order-2">
-        <Dropdown
-          arrowIcon={false}
-          inline
-          label={
-            <Avatar alt="User settings" img="https://flowbite.com/docs/images/people/profile-picture-5.jpg" rounded />
-          }
-        >
-          <Dropdown.Header>
-            <span className="block text-sm">Bonnie Green</span>
-            <span className="block truncate text-sm font-medium">name@flowbite.com</span>
-          </Dropdown.Header>
-          <Dropdown.Item>Dashboard</Dropdown.Item>
-          <Dropdown.Item>Profile</Dropdown.Item>
-          <Dropdown.Item>Sign out</Dropdown.Item>
-        </Dropdown>
-        <Navbar.Toggle />
-      </div>
+      {
+        user && <div className="flex md:order-2">
+          <Dropdown
+            arrowIcon={false}
+            inline
+            label={
+              <Avatar alt="User settings" img={user.photoURL || "https://flowbite.com/docs/images/people/profile-picture-5.jpg"} rounded />
+              
+            }
+          >
+            <Dropdown.Header>
+              <span className="block text-sm">{user.displayName}</span>
+              <span className="block truncate text-sm font-medium">{user.email}</span>
+            </Dropdown.Header>
+            <Dropdown.Item>Dashboard</Dropdown.Item>
+            <Dropdown.Item>Profile</Dropdown.Item>
+            <Dropdown.Item onClick={logOut}>Sign out</Dropdown.Item>
+          </Dropdown>
+          <Navbar.Toggle />
+        </div>
+      
+      }
 
       <Navbar.Collapse>
         <NavLink
