@@ -1,17 +1,16 @@
 import { Avatar, Dropdown, Navbar } from "flowbite-react";
-import logo from '../../assets/logo/primecare-high-resolution-logo-transparent.png'
+import logo from '../../assets/logo/primecare-high-resolution-logo-transparent.png';
 import { Link, NavLink } from "react-router-dom";
 
 const Nav = () => {
   return (
-
-    <Navbar fluid rounded className="fixed z-10 max-w-screen-xl mx-auto w-full  bg-black bg-opacity-30">
-      <Link to='/'>
-        <Navbar.Brand >
-          <img className="w-14 mr-4" src={logo} alt="Flowbite React Logo" />
+    <Navbar fluid rounded className="fixed z-10 max-w-screen-xl mx-auto w-full bg-black bg-opacity-30">
+      <div className="flex items-center">
+        <img className="w-14 mr-4" src={logo} alt="PrimeCare Logo" />
+        <Link to='/'>
           <span className="self-center whitespace-nowrap text-xl font-semibold text-orange-400">PrimeCare</span>
-        </Navbar.Brand>
-      </Link>
+        </Link>
+      </div>
 
       <div className="flex md:order-2">
         <Dropdown
@@ -33,42 +32,34 @@ const Nav = () => {
       </div>
 
       <Navbar.Collapse>
-        <Navbar.Link  >
-          <NavLink
-            to="/"
-            className={({ isActive }) =>
-              isActive ? 'text-white bg-orange-400 p-1 font-bold rounded-md' : 'p-2 text-white font-bold'
-            }
-          >
-            Home
-          </NavLink>
-        </Navbar.Link>
+        <NavLink
+          to="/"
+          className={({ isActive }) =>
+            isActive ? 'text-white bg-orange-400 p-1 font-bold rounded-md' : 'p-2 text-white font-bold'
+          }
+        >
+          Home
+        </NavLink>
 
-        <Navbar.Link>
-          <NavLink
-            to="/availableCamp"
-            className={({ isActive }) =>
-              isActive ? 'text-white bg-orange-400 p-1 r font-bold rounded-md' : 'p-2 text-white font-bold'
-            }
-          >
-            Available Camps
-          </NavLink>
-        </Navbar.Link>
+        <NavLink
+          to="/availableCamp"
+          className={({ isActive }) =>
+            isActive ? 'text-white bg-orange-400 p-1 r font-bold rounded-md' : 'p-2 text-white font-bold'
+          }
+        >
+          Available Camps
+        </NavLink>
 
-        <Navbar.Link>
-          <NavLink
-            to="/joinUs"
-            className={({ isActive }) =>
-              isActive ? 'text-white bg-orange-400 p-1  font-bold rounded-md' : 'p-1 text-white font-bold'
-            }
-          >
-            Join Us
-          </NavLink></Navbar.Link>
+        <NavLink
+          to="/joinUs"
+          className={({ isActive }) =>
+            isActive ? 'text-white bg-orange-400 p-1 font-bold rounded-md' : 'p-1 text-white font-bold'
+          }
+        >
+          Join Us
+        </NavLink>
       </Navbar.Collapse>
-
-
     </Navbar>
-
   );
 };
 
