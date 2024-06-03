@@ -5,9 +5,11 @@ import Foot from "../Shared/Footer/Footer";
 const Main = () => {
     return (
         <div>
-          <Nav/>
-            <Outlet></Outlet>
-            <Foot/>
+            <Nav />
+            <div className="flex-grow min-h-[calc(100vh-200px)]">
+                <Outlet ></Outlet>
+            </div>
+            <Foot />
         </div>
     );
 };

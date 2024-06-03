@@ -1,18 +1,18 @@
-import { Avatar, Dropdown, Navbar  } from "flowbite-react";
+import { Avatar, Dropdown, Navbar } from "flowbite-react";
 import logo from '../../assets/logo/primecare-high-resolution-logo-transparent.png'
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const Nav = () => {
-    return (
-   
-         <Navbar fluid rounded>
+  return (
+
+    <Navbar fluid rounded className="fixed z-10 max-w-screen-xl mx-auto w-full  bg-black bg-opacity-30">
       <Link to='/'>
-      <Navbar.Brand >
-        <img className="w-14 mr-4" src={logo} alt="Flowbite React Logo" />
-        <span className="self-center whitespace-nowrap text-xl font-semibold text-orange-400">PrimeCare</span>
-      </Navbar.Brand>
+        <Navbar.Brand >
+          <img className="w-14 mr-4" src={logo} alt="Flowbite React Logo" />
+          <span className="self-center whitespace-nowrap text-xl font-semibold text-orange-400">PrimeCare</span>
+        </Navbar.Brand>
       </Link>
-      
+
       <div className="flex md:order-2">
         <Dropdown
           arrowIcon={false}
@@ -33,17 +33,43 @@ const Nav = () => {
       </div>
 
       <Navbar.Collapse>
-        <Navbar.Link href="/" active>
-          Home
+        <Navbar.Link  >
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              isActive ? 'text-white bg-orange-400 p-1 font-bold rounded-md' : 'p-2 text-white font-bold'
+            }
+          >
+            Home
+          </NavLink>
         </Navbar.Link>
-        <Navbar.Link href="/availableCamp">Available Camps</Navbar.Link>
-        <Navbar.Link href="/joinUs">Join US</Navbar.Link>
+
+        <Navbar.Link>
+          <NavLink
+            to="/availableCamp"
+            className={({ isActive }) =>
+              isActive ? 'text-white bg-orange-400 p-1 r font-bold rounded-md' : 'p-2 text-white font-bold'
+            }
+          >
+            Available Camps
+          </NavLink>
+        </Navbar.Link>
+
+        <Navbar.Link>
+          <NavLink
+            to="/joinUs"
+            className={({ isActive }) =>
+              isActive ? 'text-white bg-orange-400 p-1  font-bold rounded-md' : 'p-1 text-white font-bold'
+            }
+          >
+            Join Us
+          </NavLink></Navbar.Link>
       </Navbar.Collapse>
 
-      
+
     </Navbar>
-     
-    );
+
+  );
 };
 
 export default Nav;

@@ -1,7 +1,7 @@
 
 const AvailableCamp = () => {
     return (
-        <div>
+        <div className="pt-20">
             this is Available camp
         </div>
     );
