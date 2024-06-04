@@ -5,7 +5,7 @@ import img3 from '../../../assets/Slider/pexels-googledeepmind-17484970.jpg'
 
 const Slider = () => {
     return (
-        <div className="h-60  md:h-72 lg:h-96 md:pt-20 pt-20 mb-5">
+        <div className="h-60  md:h-72 lg:h-96 md:pt-16 pt-16 mb-5">
         <Carousel slideInterval={5000}>
           <img src={img1} alt="..." className="" />
           <img src={img2} alt="..." className="" />

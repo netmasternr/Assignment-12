@@ -12,10 +12,10 @@ const Nav = () => {
   const handleLinkClick = () => setIsOpen(false);
 
   return (
-    <Navbar fluid rounded className="fixed z-10 max-w-screen-xl mx-auto w-full bg-black bg-opacity-30">
+    <Navbar fluid rounded className="fixed z-10 max-w-screen-xl mx-auto w-full bg-black bg-opacity-50">
       <div className="flex items-center justify-between w-full px-4">
         <div className="flex items-center">
-          <img className="w-14 mr-4" src={logo} alt="PrimeCare Logo" />
+          <img className="w-10 mr-4" src={logo} alt="PrimeCare Logo" />
           <Link to='/' className="text-xl font-semibold text-orange-400">PrimeCare</Link>
         </div>
 
