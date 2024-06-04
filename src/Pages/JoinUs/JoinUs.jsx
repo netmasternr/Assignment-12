@@ -32,7 +32,7 @@ const JoinUs = () => {
                     showConfirmButton: false,
                     timer: 1500
                 });
-                navigate(form)
+                navigate(form, {replace:true})
             })
             .catch((error => {
                 const errorMessage = error.message;

@@ -41,9 +41,18 @@ const Nav = () => {
               Available Camps
             </NavLink>
 
-            {user ? (
-              <button className="text-white bg-orange-400 p-1 font-bold rounded-md" onClick={logOut}>Sign out</button>
-            ) : (
+            {/* <NavLink
+              to="/dashboard"
+              className={({ isActive }) =>
+                isActive ? 'text-white bg-orange-400 p-1 font-bold rounded-md' : 'p-2 text-white font-bold'
+              }
+              onClick={handleLinkClick}
+            >
+              dashboard
+            </NavLink> */}
+
+
+            {!user &&
               <NavLink
                 to="/joinUs"
                 className={({ isActive }) =>
@@ -53,7 +62,8 @@ const Nav = () => {
               >
                 Join Us
               </NavLink>
-            )}
+            }
+
           </div>
 
           <div className="md:mx-20">
@@ -69,7 +79,12 @@ const Nav = () => {
                   <span className="block text-sm">{user.displayName}</span>
                   <span className="block truncate text-sm font-medium">{user.email}</span>
                 </Dropdown.Header>
-                <Dropdown.Item>Dashboard</Dropdown.Item>
+
+                <Link to='/dashboard'>
+                  <Dropdown.Item>Dashboard </Dropdown.Item>
+                </Link>
+
+
                 <Dropdown.Item>Profile</Dropdown.Item>
                 <Dropdown.Item onClick={logOut}>Sign out</Dropdown.Item>
               </Dropdown>

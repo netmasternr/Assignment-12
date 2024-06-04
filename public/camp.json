@@ -1,0 +1,68 @@
+[
+    {
+        "id": 1,
+        "campName": "Summer Wellness Camp",
+        "image": "https://i.ibb.co/nQwTxwB/rendering-anime-doctors-work.jpg",
+        "campFees": 150,
+        "dateTime": "2023-07-15 10:00 AM",
+        "location": "Green Valley Retreat Center",
+        "healthcareProfessionalName": "Dr. Emily Johnson",
+        "participantCount": 42,
+        "description": "Join our rejuvenating wellness camp for outdoor activities, mindfulness sessions, and healthy meals."
+    },
+    {
+        "id": 2,
+        "campName": "Adventure Retreat",
+        "image": "https://i.ibb.co/cbFyQ4n/pexels-pixabay-356040.jpg",
+        "campFees": 200,
+        "dateTime": "2023-08-20 9:30 AM",
+        "location": "Mountain Peaks Lodge",
+        "healthcareProfessionalName": "Dr. Mark Anderson",
+        "participantCount": 28,
+        "description": "Embark on thrilling adventures, explore nature, and connect with like-minded adventurers."
+    },
+    {
+        "id": 3,
+        "campName": "Yoga and Mindfulness Retreat",
+        "image": "https://i.ibb.co/qgbXyN4/8181186-3847283.jpg",
+        "campFees": 120,
+        "dateTime": "2023-09-10 8:00 AM",
+        "location": "Serenity Yoga Center",
+        "healthcareProfessionalName": "Yoga Instructor Sarah",
+        "participantCount": 35,
+        "description": "Find inner peace, practice yoga, and learn mindfulness techniques."
+    },
+    {
+        "id": 4,
+        "campName": "Family Fun Camp",
+        "image": "https://i.ibb.co/Wk2hSMd/pexels-pixabay-356040-1.jpg",
+        "campFees": 80,
+        "dateTime": "2023-07-30 11:00 AM",
+        "location": "Lakeview Campground",
+        "healthcareProfessionalName": "None",
+        "participantCount": 60,
+        "description": "Enjoy outdoor games, campfires, and quality time with your family."
+    },
+    {
+        "id": 5,
+        "campName": "Art and Creativity Retreat",
+        "image": "https://i.ibb.co/qgbXyN4/8181186-3847283.jpg",
+        "campFees": 180,
+        "dateTime": "2023-08-05 2:00 PM",
+        "location": "Creative Haven Studios",
+        "healthcareProfessionalName": "Art Therapist Lisa",
+        "participantCount": 20,
+        "description": "Unleash your creativity through painting, sculpture, and expressive arts."
+    },
+    {
+        "id": 6,
+        "campName": "Wilderness Survival Camp",
+        "image": "https://i.ibb.co/72NGfVF/pexels-tima-miroshnichenko-5407206.jpg",
+        "campFees": 250,
+        "dateTime": "2023-09-25 7:00 AM",
+        "location": "Deep Forest Reserve",
+        "healthcareProfessionalName": "Survival Expert Mike",
+        "participantCount": 15,
+        "description": "Learn essential survival skills, navigation, and outdoor resilience."
+    }
+]

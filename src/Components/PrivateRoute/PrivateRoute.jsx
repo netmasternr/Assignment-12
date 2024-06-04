@@ -1,10 +1,11 @@
 /* eslint-disable react/prop-types */
 import { Spinner } from "flowbite-react";
 import UseAuth from "../Hooks/useAuth/useAuth";
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 
-const PrivateRoute = ({Children}) => {
+const PrivateRoute = ({children}) => {
     const {user, loading} = UseAuth();
+    const location = useLocation();
 
     if(loading){
         return   <div className="flex flex-wrap gap-2">
@@ -20,11 +21,12 @@ const PrivateRoute = ({Children}) => {
       </div>
     }
 
-    if(user){
-        return Children;
-    }
 
-    return <Navigate to='/joinUs'/>
+    return user ? (
+      <div>{children}</div>
+    ) : (
+      <Navigate to='/joinUs' state={{from: location}} replace/>
+    )
 };
 
 export default PrivateRoute;
