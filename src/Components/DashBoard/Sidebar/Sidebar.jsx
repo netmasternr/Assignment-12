@@ -39,7 +39,7 @@ const Sidebar = () => {
             <div className='bg-gray-100 text-gray-800 flex justify-between md:hidden'>
                 <div>
                     <div className='block cursor-pointer p-4 font-bold'>
-                        <Link to='/'>
+                        {/* <Link to='/'>
                             <img
                                 // className='hidden md:block'
                                 src='https://i.ibb.co/4ZXzmq5/logo.png'
@@ -47,7 +47,8 @@ const Sidebar = () => {
                                 width='100'
                                 height='100'
                             />
-                        </Link>
+                        </Link> */}
+                        <p></p>
                     </div>
                 </div>
 

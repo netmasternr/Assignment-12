@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Card } from "flowbite-react";
 import { Link } from "react-router-dom";
-
 const HomeCard = ({ data }) => {
     const {
         campName,
@@ -11,7 +10,8 @@ const HomeCard = ({ data }) => {
         location,
         healthcareProfessionalName,
         participantCount,
-        description
+        description,
+        _id
     } = data;
 
     return (
@@ -34,7 +34,7 @@ const HomeCard = ({ data }) => {
                     </p>
                 </div>
                 <div>
-                    <Link>
+                    <Link to={`/Details/${_id}`}>
                         <button className="relative overflow-hidden px-4 py-2 text-white font-semibold transition-transform duration-300 bg-gray-600 rounded-md hover:scale-105">
                             View Details
                             <span className="absolute inset-0 bg-black opacity-20"></span>

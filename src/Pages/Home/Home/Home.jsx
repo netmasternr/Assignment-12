@@ -33,7 +33,7 @@ const Home = () => {
             <Slider />
 
             <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-5">
-                {campData.map((data) => <HomeCard key={data.id} data={data} />)}
+                {campData.map((data) => <HomeCard key={data._id} data={data} />)}
             </div>
 
             <div className="text-center font-bold text-xl mt-10">

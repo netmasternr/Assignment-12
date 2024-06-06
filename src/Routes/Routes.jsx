@@ -15,6 +15,7 @@ import PerticipantProfile from "../Components/DashBoard/Perticipant Routes/Perti
 import Analytics from "../Components/DashBoard/Perticipant Routes/Analytics/Analytics";
 import RegisteredCamps from "../Components/DashBoard/Perticipant Routes/RegisterdCamps/RegisterdCamps";
 import PaymentHistory from "../Components/DashBoard/Perticipant Routes/PaymentHistory/PaymentHistory";
+import CardDetails from "../Pages/Home/Card/CardDetails/CardDetails";
 
 
 const router = createBrowserRouter([
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <Home />
+      },
+      {
+        path: '/Details/:_id',
+        element: <CardDetails />
       },
       {
         path: '/availableCamp',
