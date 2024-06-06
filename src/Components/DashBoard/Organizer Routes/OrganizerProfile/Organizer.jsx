@@ -6,7 +6,7 @@ const Organizer = () => {
     return (
         <div>
             <div className="text-center text-lg font-medium pb-3">
-                <p> this is organizer profile</p>
+                <p>Organizer profile</p>
             </div>
             <div className="w-full max-w-2xl overflow-hidden bg-white rounded-lg shadow-lg flex gap-3">
                 <img className="object-cover w-1/3 h-30" src={
@@ -19,7 +19,13 @@ const Organizer = () => {
                     <p>
                         {user.email}
                     </p>
+
                 </div>
+            </div>
+            <div className="mt-5">
+                <button className="p-2 bg-gray-400 rounded-md hover:bg-orange-400
+                            transition-transform duration-300 
+                            hover:scale-105 ">Update Profile</button>
             </div>
         </div>
 

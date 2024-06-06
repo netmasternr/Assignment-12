@@ -2,7 +2,7 @@
 const Analytics = () => {
     return (
         <div>
-            analytics
+            analytics Chart
         </div>
     );
 };
