@@ -23,10 +23,6 @@ const Sidebar = () => {
 
     const [isActive, setActive] = useState(false)
 
-    // useEffec(() => {
-    //     // Navigate to 'Organizer' route by default
-    //     navigate('/Organizer');
-    // }, [navigate]);
 
     // Sidebar Responsive Handler
     const handleToggle = () => {
@@ -68,20 +64,6 @@ const Sidebar = () => {
                     }  md:translate-x-0  transition duration-200 ease-in-out`}
             >
                 <div>
-                    <div>
-                        <div className='w-full hidden md:flex px-4 py-2 shadow-lg rounded-lg justify-center items-center bg-rose-100 mx-auto'>
-                            <Link to='/'>
-                                <img
-                                    // className='hidden md:block'
-                                    src='https://i.ibb.co/4ZXzmq5/logo.png'
-                                    alt='logo'
-                                    width='100'
-                                    height='100'
-                                />
-                            </Link>
-                        </div>
-                    </div>
-
                     <Tabs className='mt-3' aria-label="Pills" style="pills">
                         {/* organizer tab */}
                         <Tabs.Item active title="Organizer"  >
