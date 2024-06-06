@@ -29,7 +29,7 @@ const CardDetails = () => {
 
 
     return (
-        <div className="pt-16 mb-5 max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-md">
+        <div className="pt-16 mb-5 max-w-4xl mx-auto overflow-hidden bg-white rounded-lg pb-3 shadow-md">
            <img className="object-cover w-full rounded-lg h-64 transition-transform duration-300  hover:scale-95" src={cardDetails.image} alt="Article" />
 
             <div className="p-6">

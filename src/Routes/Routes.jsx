@@ -30,7 +30,10 @@ const router = createBrowserRouter([
       },
       {
         path: '/Details/:_id',
-        element: <CardDetails />
+        element: <PrivateRoute>
+          <CardDetails />
+        </PrivateRoute>
+
       },
       {
         path: '/availableCamp',
@@ -77,22 +80,22 @@ const router = createBrowserRouter([
       },
 
       // perticipant
-     {
-      path:'perticipantProfile',
-      element:<PerticipantProfile/>
-     },
-     {
-      path:'analytics',
-      element:<Analytics/>
-     },
-     {
-      path:'RegisteredCamps',
-      element:<RegisteredCamps/>
-     },
-     {
-      path:'PaymentHistory',
-      element:<PaymentHistory/>
-     },
+      {
+        path: 'perticipantProfile',
+        element: <PerticipantProfile />
+      },
+      {
+        path: 'analytics',
+        element: <Analytics />
+      },
+      {
+        path: 'RegisteredCamps',
+        element: <RegisteredCamps />
+      },
+      {
+        path: 'PaymentHistory',
+        element: <PaymentHistory />
+      },
     ]
   }
 

@@ -20,7 +20,7 @@ const GoogleSignIn = () => {
                     showConfirmButton: false,
                     timer: 1500
                 });
-                navigate(form)
+                navigate('/')
             })
             .catch((error) => {
                 const errorMessage = error.message;
