@@ -16,8 +16,8 @@ const HomeCard = ({ data }) => {
 
     return (
         <div className="flex">
-            <Card className="max-w-sm flex flex-col">
-                <img className="h-48 w-full object-cover" src={image} alt="" />
+            <Card className="max-w-sm flex  border-2 flex-col">
+                <img className="h-48 hover:scale-105 transition-transform duration-300 w-full object-cover" src={image} alt="" />
                 <div className="flex flex-col justify-between p-4">
                     <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                         {campName}

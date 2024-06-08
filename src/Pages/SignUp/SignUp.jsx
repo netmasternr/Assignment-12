@@ -7,8 +7,10 @@ import useAuth from '../../Components/Hooks/useAuth/useAuth';
 import UseAuth from '../../Components/Hooks/useAuth/useAuth';
 import Swal from 'sweetalert2';
 import { useLocation, useNavigate } from 'react-router-dom';
+import UseAxiosPublic from '../../Components/Hooks/UseAxiosPublic/UseAxiosPublic';
 
 const SignUp = () => {
+    const axiosPublic = UseAxiosPublic();
     const { CreateUser } = UseAuth();
     const navigate = useNavigate();
     const location = useLocation();
@@ -17,22 +19,36 @@ const SignUp = () => {
     const {
         register,
         handleSubmit,
+        reset,
         formState: { errors },
     } = useForm()
 
     const onSubmit = (data) => {
-        const { email, password, fullName } = data;
+        const { email, password } = data;
 
         CreateUser(email, password)
             .then(result => {
-                Swal.fire({
-                    position: "center",
-                    icon: "success",
-                    title: "Registered Successfully",
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-                navigate(form, { replace: true })
+               
+                const userInfo={
+                    name:data.fullName,
+                    email: email
+                }
+                // create user entry in the database
+                axiosPublic.post('users',userInfo)
+                .then(res=>{
+                    if(res.data.insertedId){
+                        reset();
+                        Swal.fire({
+                            position: "center",
+                            icon: "success",
+                            title: "Registered Successfully",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        navigate(form, { replace: true })
+                    }
+                })
+
             })
             .catch((error => {
                 const errorMessage = error.message;
@@ -77,7 +93,7 @@ const SignUp = () => {
                     </span>
 
                     <input type="text" name='fullName' className="block w-full py-3 text-gray-700 bg-white border rounded-lg px-11 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" placeholder="Your Name"
-                        defaultValue="test" {...register("fullName")} />
+                        {...register("fullName")} />
                 </div>
 
                 {/* <label htmlFor="dropzone-file" className="flex items-center px-3 py-3 mx-auto mt-6 text-center bg-white border-2 border-dashed rounded-lg cursor-pointer dark:border-gray-600 dark:bg-gray-900">
@@ -98,7 +114,7 @@ const SignUp = () => {
                     </span>
 
                     <input type="email" name='email' required className="block w-full py-3 text-gray-700 bg-white border rounded-lg px-11 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" placeholder="Email address"
-                        defaultValue="test" {...register("email")} />
+                        {...register("email")} />
                 </div>
 
                 <div className="relative flex items-center mt-4">
@@ -109,7 +125,7 @@ const SignUp = () => {
                     </span>
 
                     <input type="password" name='password' required className="block w-full px-10 py-3 text-gray-700 bg-white border rounded-lg dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" placeholder="Password"
-                        defaultValue="test" {...register("password")} />
+                        {...register("password")} />
                 </div>
 
                 <div>

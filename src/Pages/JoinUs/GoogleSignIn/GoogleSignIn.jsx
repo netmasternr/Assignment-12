@@ -1,26 +1,37 @@
 import Swal from "sweetalert2";
 import UseAuth from "../../../Components/Hooks/useAuth/useAuth";
 import { useLocation, useNavigate } from "react-router-dom";
+import UseAxiosPublic from "../../../Components/Hooks/UseAxiosPublic/UseAxiosPublic";
 
 const GoogleSignIn = () => {
     const { googleSignIn } = UseAuth();
-   
+    const axiosPublic = UseAxiosPublic();
+
     const navigate = useNavigate();
-    const location = useLocation();
-    const form = location?.state || '/';
+    // const location = useLocation();
+    // const form = location?.state || '/';
 
 
     const handleSocialLogin = socialProvider => {
         socialProvider()
             .then(result => {
-                Swal.fire({
-                    position: "center",
-                    icon: "success",
-                    title: "Registered Successfully",
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-                navigate('/')
+                const userInfo = {
+                    email: result.user?.email,
+                    name: result.user?.displayName
+                };
+                axiosPublic.post('/users', userInfo)
+
+                    .then(res => {
+                        // console.log(res.data)
+                        Swal.fire({
+                            position: "center",
+                            icon: "success",
+                            title: "Registered Successfully",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        navigate('/')
+                    })
             })
             .catch((error) => {
                 const errorMessage = error.message;

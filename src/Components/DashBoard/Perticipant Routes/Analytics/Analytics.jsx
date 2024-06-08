@@ -3,6 +3,7 @@ const Analytics = () => {
     return (
         <div>
             analytics Chart
+
         </div>
     );
 };

@@ -40,18 +40,7 @@ const Nav = () => {
             >
               Available Camps
             </NavLink>
-
-            {/* <NavLink
-              to="/dashboard"
-              className={({ isActive }) =>
-                isActive ? 'text-white bg-orange-400 p-1 font-bold rounded-md' : 'p-2 text-white font-bold'
-              }
-              onClick={handleLinkClick}
-            >
-              dashboard
-            </NavLink> */}
-
-
+          
             {!user &&
               <NavLink
                 to="/joinUs"
@@ -80,7 +69,7 @@ const Nav = () => {
                   <span className="block truncate text-sm font-medium">{user.email}</span>
                 </Dropdown.Header>
 
-                <Link to='/dashboard'>
+                <Link to='/dashboard/Profile'>
                   <Dropdown.Item>Dashboard </Dropdown.Item>
                 </Link>
 

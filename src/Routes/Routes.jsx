@@ -7,7 +7,7 @@ import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 import SignUp from "../Pages/SignUp/SignUp";
 import PrivateRoute from "../Components/PrivateRoute/PrivateRoute";
 import DashboardLayout from "../Components/DashBoard/Dashboard/DashboardLayout";
-import Organizer from "../Components/DashBoard/Organizer Routes/OrganizerProfile/Organizer";
+import Organizer from "../Components/DashBoard/Organizer Routes/OrganizerProfile/Profile";
 import AddCamp from "../Components/DashBoard/Organizer Routes/AddCamp/AddCamp";
 import ManageCamp from "../Components/DashBoard/Organizer Routes/ManageCamp/ManageCamp";
 import ManageRegisteredCamp from "../Components/DashBoard/Organizer Routes/ManageRegisteredCamp/ManageRegisteredCamp";
@@ -16,6 +16,7 @@ import Analytics from "../Components/DashBoard/Perticipant Routes/Analytics/Anal
 import RegisteredCamps from "../Components/DashBoard/Perticipant Routes/RegisterdCamps/RegisterdCamps";
 import PaymentHistory from "../Components/DashBoard/Perticipant Routes/PaymentHistory/PaymentHistory";
 import CardDetails from "../Pages/Home/Card/CardDetails/CardDetails";
+import Profile from "../Components/DashBoard/Organizer Routes/OrganizerProfile/Profile";
 
 
 const router = createBrowserRouter([
@@ -29,7 +30,7 @@ const router = createBrowserRouter([
         element: <Home />
       },
       {
-        path: '/Details/:_id',
+        path: '/Details/:id',
         element: <PrivateRoute>
           <CardDetails />
         </PrivateRoute>
@@ -63,8 +64,8 @@ const router = createBrowserRouter([
     children: [
       // organizer
       {
-        path: 'OrganizerProfile',
-        element: <Organizer />
+        path: 'Profile',
+        element: <Profile />
       },
       {
         path: 'addCamp',
@@ -81,8 +82,8 @@ const router = createBrowserRouter([
 
       // perticipant
       {
-        path: 'perticipantProfile',
-        element: <PerticipantProfile />
+        path: 'Profile',
+        element: <Profile />
       },
       {
         path: 'analytics',

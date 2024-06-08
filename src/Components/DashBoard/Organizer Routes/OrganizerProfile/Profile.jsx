@@ -1,6 +1,6 @@
 import UseAuth from "../../../Hooks/useAuth/useAuth";
 
-const Organizer = () => {
+const Profile = () => {
     const { user } = UseAuth();
 
     return (
@@ -14,10 +14,10 @@ const Organizer = () => {
                 } alt="avatar" />
 
                 <div className="py-5 ">
-                    <h1>{user.displayName}</h1>
+                    <h1>name:{user.displayName || 'Unknown'}</h1>
 
                     <p>
-                        {user.email}
+                       Email:  {user.email}
                     </p>
 
                 </div>
@@ -32,4 +32,4 @@ const Organizer = () => {
     );
 };
 
-export default Organizer;
+export default Profile;

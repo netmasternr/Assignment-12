@@ -1,55 +1,47 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import UseAxiosSecure from "../../../../Components/Hooks/AxiosSecure/AxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 
 const CardDetails = () => {
-    const { _id } = useParams();
-    const idInt = parseInt(_id);
-    const [cardDetails, setCardDetails] = useState([]);
-    // console.log(cardDetails)
+    const axiosSecure = UseAxiosSecure();
+    const { id } = useParams();
+
+    const { data: campData = {}, isLoading } = useQuery({
+        queryKey: ['camp', id],
+        queryFn: async () => {
+            const { data } = await axiosSecure.get(`/addCamp/${id}`)
+            
+            return data
+        }
+    })
+
+    if (isLoading) return <p>Loading...</p>;
 
 
-    useEffect(() => {
-        const getDetails = async () => {
-            try {
-                const { data } = await axios('/camp.json');
-
-                const cardDetails = data.find(camp => camp._id === idInt);
-                setCardDetails(cardDetails)
-            }
-            catch (error) {
-                // 
-            }
-            finally {
-                // 
-            }
-        };
-        getDetails();
-    }, [idInt]);
 
 
     return (
         <div className="pt-16 mb-5 max-w-4xl mx-auto overflow-hidden bg-white rounded-lg pb-3 shadow-md">
-           <img className="object-cover w-full rounded-lg h-64 transition-transform duration-300  hover:scale-95" src={cardDetails.image} alt="Article" />
+           <img className="object-cover w-full rounded-lg h-64 transition-transform duration-300  hover:scale-95" src={campData.image} alt="Article" />
 
             <div className="p-6">
 
                 <div className="space-y-5 pb-5">
                     <h1>
-                        Camp Name: {cardDetails.campName}
+                        Camp Name: {campData.campName}
                     </h1>
-                    <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">Description: {cardDetails.description}</p>
+                    <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">Description: {campData.description}</p>
 
                     <div className="flex gap-3">
-                        <p>Camp Fee: {cardDetails.campFees} </p>
+                        <p>Camp Fee: {campData.campFees} </p>
 
-                        <p>Location: {cardDetails.location} </p>
+                        <p>Location: {campData.location} </p>
                     </div>
 
                     <div className="space-y-5">
-                        <p>Date and Time: {cardDetails.dateTime} </p>
-                        <p>Healthcare Professional: {cardDetails.healthcareProfessionalName} </p>
-                        <p>participant count: {cardDetails.participantCount} </p>
+                        <p>Date and Time: {campData.dateTime} </p>
+                        <p>Healthcare Professional: {campData.healthcareProfessionalName} </p>
+                        <p>participant count: {campData.participantCount} </p>
 
 
                         <div className="text-center">
