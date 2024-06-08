@@ -6,14 +6,14 @@ const UseOrganizer = () => {
     const { user } = UseAuth();
     const axiosSecure = UseAxiosSecure();
 
-    const { data: isOrganizer } = useQuery({
+    const { data: isOrganizer, isPending: isOrganizerLoading } = useQuery({
         queryKey: [user?.email, 'UseOrganizer'],
         queryFn: async () => {
             const res = await axiosSecure.get(`/user/admin/${user.email}`)
             return res.data.isOrganizer;
         }
     })
-    return [isOrganizer]
+    return [isOrganizer, isOrganizerLoading]
 };
 
 export default UseOrganizer;
