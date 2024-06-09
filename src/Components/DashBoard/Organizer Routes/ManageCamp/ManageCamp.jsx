@@ -1,14 +1,57 @@
 import { Table } from "flowbite-react";
+import UseAxiosSecure from "../../../Hooks/AxiosSecure/AxiosSecure";
+import { useQuery } from "@tanstack/react-query";
+import { MdDeleteForever } from "react-icons/md";
+import Swal from "sweetalert2";
 
 
 const ManageCamp = () => {
+    const axiosSecure = UseAxiosSecure();
+
+    const { data: campsData = [], refetch } = useQuery({
+        queryKey: ['camps'],
+        queryFn: async () => {
+            const { data } = await axiosSecure.get('/addCamp')
+            return data
+        }
+    })
+
+
+    // delete
+    const handleDelete = (camp) => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const { data } = await axiosSecure.delete(`/addCamp/${camp._id}`)
+                console.log(data)
+                if (data.deletedCount > 0) {
+                      Swal.fire({
+                        title: "Deleted!",
+                        text: "Your file has been deleted.",
+                        icon: "success"
+                      });
+                }
+            }
+            refetch()
+        });
+    }
+
+
+
     return (
         <div>
 
             <div className="overflow-x-auto">
                 <Table>
                     <Table.Head>
-                        <Table.HeadCell>name</Table.HeadCell>
+                        <Table.HeadCell>Camp name</Table.HeadCell>
                         <Table.HeadCell>Date & Time</Table.HeadCell>
                         <Table.HeadCell>Location</Table.HeadCell>
                         <Table.HeadCell>
@@ -24,26 +67,40 @@ const ManageCamp = () => {
                     </Table.Head>
 
                     <Table.Body className="divide-y">
-                        <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                            
-                            <Table.Cell>name</Table.Cell>
-                            <Table.Cell>Date & Time</Table.Cell>
-                            <Table.Cell>Location</Table.Cell>
+                        {
+                            campsData.map(camp => <Table.Row key={camp._id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
 
-                            <Table.Cell>
-                            Healthcare Professional
-                            </Table.Cell>
+                                <Table.Cell>
+                                    {camp.campName}
+                                </Table.Cell>
 
-                            <Table.Cell>
-                            Update
-                            </Table.Cell>
+                                <Table.Cell>
+                                    {camp.dateTime}
+                                </Table.Cell>
 
-                            <Table.Cell>
-                            Delete
-                            </Table.Cell>
-                        </Table.Row>
+                                <Table.Cell> {camp.location}</Table.Cell>
 
-                        
+                                <Table.Cell>
+                                    {camp.healthcareProfessionalName}
+                                </Table.Cell>
+
+                                <Table.Cell>
+                                    <button className="p-2 rounded-md bg-orange-400
+                                    hover:bg-green-400
+                            transition-transform duration-300 
+                            hover:scale-105 text-white ">Update</button>
+                                </Table.Cell>
+
+                                <Table.Cell>
+                                    <button onClick={() => handleDelete(camp)} className="p-3 rounded-md bg-red-700
+                            transition-transform duration-300 
+                            hover:scale-110 text-white ">
+                                        <MdDeleteForever />
+                                    </button>
+
+                                </Table.Cell>
+                            </Table.Row>)
+                        }
                     </Table.Body>
                 </Table>
             </div>

@@ -17,6 +17,7 @@ import RegisteredCamps from "../Components/DashBoard/Perticipant Routes/Register
 import PaymentHistory from "../Components/DashBoard/Perticipant Routes/PaymentHistory/PaymentHistory";
 import CardDetails from "../Pages/Home/Card/CardDetails/CardDetails";
 import Profile from "../Components/DashBoard/Organizer Routes/OrganizerProfile/Profile";
+import AdminRoute from "../Components/PrivateRoute/AdminRoute/AdminRoute";
 
 
 const router = createBrowserRouter([
@@ -69,15 +70,21 @@ const router = createBrowserRouter([
       },
       {
         path: 'addCamp',
-        element: <AddCamp />
+        element: <AdminRoute>
+          <AddCamp />
+        </AdminRoute>
       },
       {
         path: 'manageCamp',
-        element: <ManageCamp />
+        element: <AdminRoute>
+          <ManageCamp />
+        </AdminRoute>
       },
       {
         path: 'ManageRegisteredCamp',
-        element: <ManageRegisteredCamp />
+        element: <AdminRoute>
+          <ManageRegisteredCamp />
+        </AdminRoute>
       },
 
       // perticipant
