@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types'
+/* eslint-disable react/prop-types */
 import {
     Dialog,
     Transition,
@@ -7,33 +7,11 @@ import {
     DialogTitle,
 } from '@headlessui/react'
 import { Fragment } from 'react'
-import JoinModalForm from './JoinModalForm'
-import { useForm } from 'react-hook-form'
-import useAxiosPublic from '../hooks/useAxiosPublic'
-import toast from 'react-hot-toast'
+import JoinModalForm from '../JoinModalForm/JoinModalForm';
 
-const JoinCampModal = ({ closeModal, isOpen, camps, refetch }) => {
-  
-    const axiosPublic = useAxiosPublic()
-    const { register, handleSubmit } = useForm()
-    // console.log(camps, camps.participantCount)
+const JoinModal = ({ closeModal, isOpen, campData}) => {
 
-    const handlebtn = async formData => {
-        try {
-            const { data } = await axiosPublic.post('/participant', formData)
-            console.log(data)
 
-            // await axiosPublic.patch('/updateParticipants', camps)
-            await axiosPublic.patch(`/camps/participants/${camps?._id}`, camps)
-            toast.success('You Successfully Join This Camp')
-            refetch()
-            closeModal()
-        } catch (err) {
-            console.log(err)
-            toast.error('Three is issue!')
-        }
-
-    }
     return (
         <Transition appear show={isOpen} as={Fragment}>
             <Dialog as='div' className='relative z-10' onClose={closeModal}>
@@ -67,38 +45,40 @@ const JoinCampModal = ({ closeModal, isOpen, camps, refetch }) => {
                                 >
                                     Camps Form
                                 </DialogTitle>
+                                
+                                
+                                
+                                <JoinModalForm
+                                campData={campData}
+                                closeModal={closeModal}
+                                 />
 
                                 {/* join form  */}
-                                <div className='mt-2 w-full'>
-                                    <JoinModalForm
-                                        camps={camps}
-                                        register={register}
-                                        handleSubmit={handleSubmit}
-                                        handlebtn={handlebtn} />
-                                </div>
-                                <hr className='mt-8 ' />
+                                {/* <div className='mt-2 w-full'>
+                                <JoinModalForm
+                                    camps={camps}
+                                    register={register}
+                                    handleSubmit={handleSubmit}
+                                    handlebtn={handlebtn} />
+                            </div> */}
+
+                                <hr className='mt-5 ' />
 
                                 {/* <Elements stripe={stripePromise}>
-                                    <CheckoutForm
-                                        refetch={refetch}
-                                        closeModal={closeModal}
-                                        bookingInfo={bookingInfo} />
-                                </Elements> */}
+                                <CheckoutForm
+                                    refetch={refetch}
+                                    closeModal={closeModal}
+                                    bookingInfo={bookingInfo} />
+                            </Elements> */}
                             </DialogPanel>
                         </TransitionChild>
                     </div>
                 </div>
             </Dialog>
         </Transition>
-    )
-}
+    );
+};
 
-JoinCampModal.propTypes = {
-    bookingInfo: PropTypes.object,
-    closeModal: PropTypes.func,
-    isOpen: PropTypes.bool,
-    camps: PropTypes.object,
-    refetch: PropTypes.func,
-}
+export default JoinModal;
 
-export default JoinCampModal
+
