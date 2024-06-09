@@ -18,6 +18,7 @@ import PaymentHistory from "../Components/DashBoard/Perticipant Routes/PaymentHi
 import CardDetails from "../Pages/Home/Card/CardDetails/CardDetails";
 import Profile from "../Components/DashBoard/Organizer Routes/OrganizerProfile/Profile";
 import AdminRoute from "../Components/PrivateRoute/AdminRoute/AdminRoute";
+import UpdateCamp from "../Components/DashBoard/Organizer Routes/UpdateCamp/UpdateCamp";
 
 
 const router = createBrowserRouter([
@@ -85,6 +86,15 @@ const router = createBrowserRouter([
         element: <AdminRoute>
           <ManageRegisteredCamp />
         </AdminRoute>
+      },
+      {
+        path: 'updateCamp/:id',
+        element: <AdminRoute>
+          <UpdateCamp />
+        </AdminRoute>,
+        loader: ({params})=> fetch(`http://localhost:5000/addCamp/update/${params.id}`, {
+          headers:{ 'Authorization': 'Bearer '+  localStorage.getItem('access-token') }
+        })  
       },
 
       // perticipant

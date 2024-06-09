@@ -1,9 +1,10 @@
-import { Table } from "flowbite-react";
+import { Table, Modal, Button } from "flowbite-react";
 import UseAxiosSecure from "../../../Hooks/AxiosSecure/AxiosSecure";
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import { MdDeleteForever } from "react-icons/md";
 import Swal from "sweetalert2";
-
+import { Link } from "react-router-dom";
 
 const ManageCamp = () => {
     const axiosSecure = UseAxiosSecure();
@@ -11,13 +12,11 @@ const ManageCamp = () => {
     const { data: campsData = [], refetch } = useQuery({
         queryKey: ['camps'],
         queryFn: async () => {
-            const { data } = await axiosSecure.get('/addCamp')
-            return data
+            const { data } = await axiosSecure.get('/addCamp');
+            return data;
         }
-    })
+    });
 
-
-    // delete
     const handleDelete = (camp) => {
         Swal.fire({
             title: "Are you sure?",
@@ -29,78 +28,49 @@ const ManageCamp = () => {
             confirmButtonText: "Yes, delete it!"
         }).then(async (result) => {
             if (result.isConfirmed) {
-                const { data } = await axiosSecure.delete(`/addCamp/${camp._id}`)
-                console.log(data)
+                const { data } = await axiosSecure.delete(`/addCamp/${camp._id}`);
                 if (data.deletedCount > 0) {
-                      Swal.fire({
+                    Swal.fire({
                         title: "Deleted!",
                         text: "Your file has been deleted.",
                         icon: "success"
-                      });
+                    });
                 }
             }
-            refetch()
+            refetch();
         });
-    }
-
-
+    };
 
     return (
         <div>
-
             <div className="overflow-x-auto">
                 <Table>
                     <Table.Head>
                         <Table.HeadCell>Camp name</Table.HeadCell>
                         <Table.HeadCell>Date & Time</Table.HeadCell>
                         <Table.HeadCell>Location</Table.HeadCell>
-                        <Table.HeadCell>
-                            Healthcare Professional
-                        </Table.HeadCell>
-                        <Table.HeadCell>
-                            Update
-                        </Table.HeadCell>
-                        <Table.HeadCell>
-                            Delete
-                        </Table.HeadCell>
-
+                        <Table.HeadCell>Healthcare Professional</Table.HeadCell>
+                        <Table.HeadCell>Update</Table.HeadCell>
+                        <Table.HeadCell>Delete</Table.HeadCell>
                     </Table.Head>
 
                     <Table.Body className="divide-y">
-                        {
-                            campsData.map(camp => <Table.Row key={camp._id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
-
+                        {campsData.map(camp => (
+                            <Table.Row key={camp._id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                                <Table.Cell>{camp.campName}</Table.Cell>
+                                <Table.Cell>{camp.dateTime}</Table.Cell>
+                                <Table.Cell>{camp.location}</Table.Cell>
+                                <Table.Cell>{camp.healthcareProfessionalName}</Table.Cell>
                                 <Table.Cell>
-                                    {camp.campName}
+                                    <Link to={`/dashboard/updateCamp/${camp._id}`}> <button className="p-2 rounded-md bg-orange-400 hover:bg-green-400 transition-transform duration-300 hover:scale-105 text-white">Update</button></Link>
                                 </Table.Cell>
-
                                 <Table.Cell>
-                                    {camp.dateTime}
-                                </Table.Cell>
-
-                                <Table.Cell> {camp.location}</Table.Cell>
-
-                                <Table.Cell>
-                                    {camp.healthcareProfessionalName}
-                                </Table.Cell>
-
-                                <Table.Cell>
-                                    <button className="p-2 rounded-md bg-orange-400
-                                    hover:bg-green-400
-                            transition-transform duration-300 
-                            hover:scale-105 text-white ">Update</button>
-                                </Table.Cell>
-
-                                <Table.Cell>
-                                    <button onClick={() => handleDelete(camp)} className="p-3 rounded-md bg-red-700
-                            transition-transform duration-300 
-                            hover:scale-110 text-white ">
+                                    <button onClick={() => handleDelete(camp)} className="p-3 rounded-md bg-red-700 transition-transform duration-300 hover:scale-110 text-white">
                                         <MdDeleteForever />
                                     </button>
-
                                 </Table.Cell>
-                            </Table.Row>)
-                        }
+                            </Table.Row>
+                        ))}
                     </Table.Body>
                 </Table>
             </div>
