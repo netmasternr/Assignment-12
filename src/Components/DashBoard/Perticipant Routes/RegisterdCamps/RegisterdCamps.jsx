@@ -1,6 +1,21 @@
 import { Table } from "flowbite-react";
+import UseAxiosPublic from "../../../Hooks/UseAxiosPublic/UseAxiosPublic";
+import UseAuth from "../../../Hooks/useAuth/useAuth";
+import { useQuery } from "@tanstack/react-query";
 
 const RegisteredCamps = () => {
+    const axiosPublic = UseAxiosPublic();
+    const { user } = UseAuth();
+
+    const { data: myData = [], refetch } = useQuery({
+        queryKey: ['myJoinData'],
+        queryFn: async () => {
+            const { data } = await axiosPublic.get(`/joinCamp/MyData/${user.email}`)
+            return data;
+        }
+    })
+
+
     return (
         <div>
             <div className="overflow-x-auto">
@@ -25,26 +40,28 @@ const RegisteredCamps = () => {
                     </Table.Head>
 
                     <Table.Body className="divide-y">
-                        <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                        {
+                            myData.map(data => <Table.Row key={data._id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
 
-                            <Table.Cell>camp a</Table.Cell>
-                            <Table.Cell>200$</Table.Cell>
-                            <Table.Cell>participant name</Table.Cell>
+                                <Table.Cell>{data.campName} </Table.Cell>
+                                <Table.Cell>$ {data.campFees} </Table.Cell>
+                                <Table.Cell>{data.perticipantName || 'unknown'}</Table.Cell>
 
-                            <Table.Cell>
-                                paid
-                            </Table.Cell>
-                
-                            <Table.Cell>
-                            confirmed
-                            </Table.Cell>
-                            <Table.Cell>
-                                cancel
-                            </Table.Cell>
-                            <Table.Cell>
-                                feedback
-                            </Table.Cell>
-                        </Table.Row>
+                                <Table.Cell>
+                                    paid
+                                </Table.Cell>
+
+                                <Table.Cell>
+                                    confirmed
+                                </Table.Cell>
+                                <Table.Cell>
+                                    cancel
+                                </Table.Cell>
+                                <Table.Cell>
+                                    feedback
+                                </Table.Cell>
+                            </Table.Row>)
+                        }
 
 
                     </Table.Body>

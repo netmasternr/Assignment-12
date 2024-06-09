@@ -12,8 +12,6 @@ import Swal from 'sweetalert2';
 const JoinUs = () => {
     const { signInUser } = UseAuth();
     const navigate = useNavigate();
-    const location = useLocation();
-    const form = location?.state || '/';
 
     const {
         register,
@@ -32,7 +30,7 @@ const JoinUs = () => {
                     showConfirmButton: false,
                     timer: 1500
                 });
-                navigate(form, {replace:true})
+                navigate('/')
             })
             .catch((error => {
                 const errorMessage = error.message;

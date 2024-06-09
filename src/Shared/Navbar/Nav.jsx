@@ -73,8 +73,10 @@ const Nav = () => {
                   <Dropdown.Item>Dashboard </Dropdown.Item>
                 </Link>
 
+                <Link to='/dashboard/Profile'>
+                  <Dropdown.Item>Profile </Dropdown.Item>
+                </Link>
 
-                <Dropdown.Item>Profile</Dropdown.Item>
                 <Dropdown.Item onClick={logOut}>Sign out</Dropdown.Item>
               </Dropdown>
             )}

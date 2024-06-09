@@ -1,7 +1,6 @@
-import { Table, Modal, Button } from "flowbite-react";
+import { Table,  } from "flowbite-react";
 import UseAxiosSecure from "../../../Hooks/AxiosSecure/AxiosSecure";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
 import { MdDeleteForever } from "react-icons/md";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
@@ -46,6 +45,7 @@ const ManageCamp = () => {
             <div className="overflow-x-auto">
                 <Table>
                     <Table.Head>
+                        <Table.HeadCell>Serial</Table.HeadCell>
                         <Table.HeadCell>Camp name</Table.HeadCell>
                         <Table.HeadCell>Date & Time</Table.HeadCell>
                         <Table.HeadCell>Location</Table.HeadCell>
@@ -55,8 +55,9 @@ const ManageCamp = () => {
                     </Table.Head>
 
                     <Table.Body className="divide-y">
-                        {campsData.map(camp => (
+                        {campsData.map((camp, index) => (
                             <Table.Row key={camp._id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                                <Table.Cell>{index+1}</Table.Cell>
                                 <Table.Cell>{camp.campName}</Table.Cell>
                                 <Table.Cell>{camp.dateTime}</Table.Cell>
                                 <Table.Cell>{camp.location}</Table.Cell>

@@ -1,6 +1,18 @@
 import { Table } from "flowbite-react";
+import UseAxiosSecure from "../../../Hooks/AxiosSecure/AxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 
 const ManageRegisteredCamp = () => {
+    const axiosSecure = UseAxiosSecure();
+
+    const { data: joinData = [], refetch } = useQuery({
+        queryKey: ['registeredCamp'],
+        queryFn: async () => {
+            const { data } = await axiosSecure.get('/joinCamp')
+            return data;
+        }
+    })
+
     return (
         <div>
 
@@ -23,23 +35,26 @@ const ManageRegisteredCamp = () => {
                     </Table.Head>
 
                     <Table.Body className="divide-y">
-                        <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                        {
+                            joinData.map(data => <Table.Row key={data._id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
 
-                            <Table.Cell>participant name</Table.Cell>
-                            <Table.Cell>camp name</Table.Cell>
-                            <Table.Cell>300$</Table.Cell>
+                                <Table.Cell>{data.perticipantName} </Table.Cell>
+                                <Table.Cell>{data.campName} </Table.Cell>
+                                <Table.Cell>$ {data.campFees} </Table.Cell>
 
-                            <Table.Cell>
-                                paid 
-                            </Table.Cell>
+                                <Table.Cell>
+                                    paid
+                                </Table.Cell>
 
-                            <Table.Cell>
-                                confirm
-                            </Table.Cell>
-                            <Table.Cell>
-                                x
-                            </Table.Cell>
-                        </Table.Row>
+                                <Table.Cell>
+                                    confirm
+                                </Table.Cell>
+                                <Table.Cell>
+                                    x
+                                </Table.Cell>
+                            </Table.Row>)
+                        }
+
 
 
                     </Table.Body>

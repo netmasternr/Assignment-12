@@ -68,7 +68,7 @@ const GoogleSignIn = () => {
                 </svg>
             </div>
 
-            <button onClick={() => handleSocialLogin(googleSignIn)} className='w-5/6 px-4 py-3 font-bold text-center'>
+            <button onClick={() => handleSocialLogin(googleSignIn)} className='w-5/6 lg:px-4 py-3 font-bold text-center'>
                 Sign in with Google
             </button>
         </div>
