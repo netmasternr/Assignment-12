@@ -8,15 +8,9 @@ const PrivateRoute = ({children}) => {
     const location = useLocation();
 
     if(loading){
-        return   <div className="flex flex-wrap gap-2">
-        <div className="text-left">
+        return   <div className="flex flex-wrap gap-2 justify-center">
+        <div className="flex justify-center">
           <Spinner aria-label="Left-aligned spinner example" />
-        </div>
-        <div className="text-center">
-          <Spinner aria-label="Center-aligned spinner example" />
-        </div>
-        <div className="text-right">
-          <Spinner aria-label="Right-aligned spinner example" />
         </div>
       </div>
     }
