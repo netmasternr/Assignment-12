@@ -1,17 +1,13 @@
 /* eslint-disable react/prop-types */
-import {
-    Dialog,
-    Transition,
-} from '@headlessui/react'
-import { Fragment } from 'react'
+import { Fragment } from 'react';
+import { Transition, Dialog } from '@headlessui/react';
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import CheckOutForm from './StripePayment/CheckOutForm';
 
-
 const stripePromise = loadStripe(import.meta.env.VITE_Payment_Gateway_Pk);
 
-const Payment = ({ myData, refetch, closeModal, isOpen }) => {
+const Payment = ({ camp, refetch, closeModal, isOpen }) => {
     return (
         <div>
             <Transition appear show={isOpen} as={Fragment}>
@@ -44,14 +40,16 @@ const Payment = ({ myData, refetch, closeModal, isOpen }) => {
                                         as='h3'
                                         className='text-lg font-medium text-center leading-6 text-gray-900'
                                     >
-                                       
+                                        Payment for 
+                                        <p className='text-orange-400'>{camp.campName}</p>
                                     </Dialog.Title>
 
-                                    {/* payment stripe*/}
                                     <Elements stripe={stripePromise}>
-
-                                        <CheckOutForm></CheckOutForm>
-                                        
+                                        <CheckOutForm
+                                            camp={camp}
+                                            closeModal={closeModal}
+                                            refetch={refetch}
+                                        />
                                     </Elements>
 
                                     <hr className='mt-5 ' />

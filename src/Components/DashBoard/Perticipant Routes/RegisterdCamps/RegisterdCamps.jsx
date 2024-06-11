@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Table } from "flowbite-react";
 import UseAxiosPublic from "../../../Hooks/UseAxiosPublic/UseAxiosPublic";
 import UseAuth from "../../../Hooks/useAuth/useAuth";
@@ -5,22 +6,21 @@ import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import Payment from "../Payment/Payment";
-import { useState } from "react";
 
 const RegisteredCamps = () => {
     const axiosPublic = UseAxiosPublic();
     const { user } = UseAuth();
     const [isOpen, setIsOpen] = useState(false);
+    const [selectedCamp, setSelectedCamp] = useState(null);
 
     const { data: myData = [], refetch } = useQuery({
         queryKey: ['myJoinData'],
         queryFn: async () => {
-            const { data } = await axiosPublic.get(`/joinCamp/MyData/${user.email}`)
+            const { data } = await axiosPublic.get(`/joinCamp/MyData/${user.email}`);
             return data;
         }
-    })
+    });
 
-    // delete
     const handleCancel = data => {
         Swal.fire({
             title: "Are you sure?",
@@ -31,8 +31,7 @@ const RegisteredCamps = () => {
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes, delete it!"
         }).then(async (result) => {
-            const res = await axiosPublic.delete(`/join/delete/${data?._id}`)
-            // console.log(res.data)
+            const res = await axiosPublic.delete(`/join/delete/${data?._id}`);
 
             if (res.data.deletedCount > 0) {
                 if (result.isConfirmed) {
@@ -45,12 +44,17 @@ const RegisteredCamps = () => {
             }
             refetch();
         });
-    }
+    };
+
+    const openPaymentModal = (camp) => {
+        setSelectedCamp(camp);
+        setIsOpen(true);
+    };
 
     const closeModal = () => {
-        setIsOpen(false)
-    }
-
+        setIsOpen(false);
+        setSelectedCamp(null);
+    };
 
     return (
         <div>
@@ -61,35 +65,24 @@ const RegisteredCamps = () => {
                         <Table.HeadCell>Camp Fees</Table.HeadCell>
                         <Table.HeadCell>Organizer email</Table.HeadCell>
                         <Table.HeadCell>Participant Name</Table.HeadCell>
-                        <Table.HeadCell>
-                            payment status
-                        </Table.HeadCell>
-                        <Table.HeadCell>
-                            confirmation status
-                        </Table.HeadCell>
-                        <Table.HeadCell>
-                            cancel
-                        </Table.HeadCell>
-                        <Table.HeadCell>
-                            Feedback
-                        </Table.HeadCell>
-
+                        <Table.HeadCell>Payment Status</Table.HeadCell>
+                        <Table.HeadCell>Confirmation Status</Table.HeadCell>
+                        <Table.HeadCell>Cancel</Table.HeadCell>
+                        <Table.HeadCell>Feedback</Table.HeadCell>
                     </Table.Head>
 
                     <Table.Body className="divide-y">
-                        {
-                            myData.map(data => <Table.Row key={data._id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
-
-                                <Table.Cell>{data.campName} </Table.Cell>
-                                <Table.Cell>$ {data.campFees} </Table.Cell>
+                        {myData.map(data => (
+                            <Table.Row key={data._id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                                <Table.Cell>{data.campName}</Table.Cell>
+                                <Table.Cell>$ {data.campFees}</Table.Cell>
                                 <Table.Cell>{data.organizerEmail}</Table.Cell>
                                 <Table.Cell>{data.perticipantName || 'unknown'}</Table.Cell>
-
+                               
                                 <Table.Cell>
-                                    <Link> <button onClick={() => setIsOpen(true)} className="p-2 rounded-md bg-orange-400 hover:bg-green-400 transition-transform duration-300 hover:scale-105 text-white">pay</button></Link>
+                                    <button onClick={() => openPaymentModal(data)} className="p-2 rounded-md bg-orange-400 hover:bg-green-400 transition-transform duration-300 hover:scale-105 text-white">Pay</button>
                                 </Table.Cell>
-
-
+                                
                                 <Table.Cell>
                                     <button className="p-2 rounded-md bg-gray-400 text-white">Pending</button>
                                 </Table.Cell>
@@ -97,24 +90,23 @@ const RegisteredCamps = () => {
                                     <button onClick={() => handleCancel(data)} className="p-2 rounded-md bg-gray-600 hover:bg-red-500 transition-transform duration-300 hover:scale-105 text-white">Cancel</button>
                                 </Table.Cell>
                                 <Table.Cell>
-                                    <button className="p-2 rounded-md bg-green-400 transition-transform duration-300 hover:scale-105 text-white">FeedBack</button>
+                                    <button className="p-2 rounded-md bg-green-400 transition-transform duration-300 hover:scale-105 text-white">Feedback</button>
                                 </Table.Cell>
-                            </Table.Row>)
-                        }
-
+                            </Table.Row>
+                        ))}
                     </Table.Body>
                 </Table>
             </div>
 
             <div className="">
-                 {/* modal */}
-             <Payment 
-                myData={myData}
-                refetch={refetch}
-                closeModal={closeModal}
-                isOpen={isOpen}
-
-                />
+                {selectedCamp && (
+                    <Payment 
+                        camp={selectedCamp}
+                        refetch={refetch}
+                        closeModal={closeModal}
+                        isOpen={isOpen}
+                    />
+                )}
             </div>
         </div>
     );
