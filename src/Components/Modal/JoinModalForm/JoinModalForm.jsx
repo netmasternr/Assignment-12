@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import UseAuth from "../../Hooks/useAuth/useAuth";
 import UseAxiosPublic from "../../Hooks/UseAxiosPublic/UseAxiosPublic";
 import Swal from "sweetalert2";
-
+import toast, { Toaster } from 'react-hot-toast';
 
 const JoinModalForm = ({ campData, closeModal }) => {
     const { user } = UseAuth();
@@ -14,10 +14,22 @@ const JoinModalForm = ({ campData, closeModal }) => {
         handleSubmit,
         reset,
         formState: { errors },
-    } = useForm()
+    } = useForm();
 
     const onSubmit = async (data) => {
+        // Check if the user is the organizer
+        if (user.email === campData.organizerEmail) {
+            return  Swal.fire({
+                position: "center",
+                icon: "error",
+                title: 'Organizer cannot join own camp',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }
+
         const JoinCampData = {
+            organizerEmail: campData?.organizerEmail,
             campName: data.campName,
             gender: data.gender,
             campFees: data.campFees,
@@ -26,31 +38,34 @@ const JoinModalForm = ({ campData, closeModal }) => {
             healthcareProfessionalName: data.healthcareProfessional,
             PerticipantEmail: data.PerticipantEmail,
             age: data.age,
-            phoneNumber:data.phoneNumber,
-            emergencyContract:data.emergencyContract
+            phoneNumber: data.phoneNumber,
+            emergencyContract: data.emergencyContract
+        };
+
+        // Post the join camp data
+        try {
+            const res = await axiosPublic.post('/joinCamp', JoinCampData);
+
+            if (res.data.insertedId) {
+                reset();
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: 'Join successfully',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            } else {
+                toast.error('Failed to join the camp.');
+            }
+        } catch (error) {
+            toast.error('Failed to join the camp.');
         }
-
-        // post
-        const res = await axiosPublic.post('/joinCamp',JoinCampData)
-
-        if (res.data.insertedId) {
-            reset();
-            Swal.fire({
-                position: "center",
-                icon: "success",
-                title: 'Join successfully',
-                showConfirmButton: false,
-                timer: 1500
-            });       
-        }
-        
-    }
-
+    };
 
     return (
         <div>
-            <form onSubmit={handleSubmit(onSubmit)} className="max-w-md mx-auto p-4 border  border-gray-300 rounded-md">
-
+            <form onSubmit={handleSubmit(onSubmit)} className="max-w-md mx-auto p-4 border border-gray-300 rounded-md">
                 <div className="mb-4">
                     <label htmlFor="campName" className="block mb-1">Camp Name:</label>
                     <input type="text"
@@ -74,7 +89,6 @@ const JoinModalForm = ({ campData, closeModal }) => {
                     </select>
                 </div>
 
-
                 <div className="mb-4">
                     <label htmlFor="healthcareProfessional" className="block mb-1">Healthcare Professional Name:</label>
                     <input type="text"
@@ -85,7 +99,7 @@ const JoinModalForm = ({ campData, closeModal }) => {
                 </div>
 
                 <div className="mb-4">
-                    <label htmlFor="healthcareProfessional" className="block mb-1">Perticipant Name:</label>
+                    <label htmlFor="perticipantName" className="block mb-1">Perticipant Name:</label>
                     <input type="text"
                         defaultValue={user.displayName}
                         readOnly
@@ -113,11 +127,9 @@ const JoinModalForm = ({ campData, closeModal }) => {
                     </div>
                 </div>
 
-
-
                 <div className="flex gap-2">
                     <div className="mb-4 ">
-                        <label htmlFor="healthcareProfessional" className="block mb-1">Participant Email:</label>
+                        <label htmlFor="PerticipantEmail" className="block mb-1">Participant Email:</label>
                         <input type="text"
                             defaultValue={user.email}
                             readOnly
@@ -127,31 +139,28 @@ const JoinModalForm = ({ campData, closeModal }) => {
                     </div>
 
                     <div className="mb-4">
-                        <label htmlFor="healthcareProfessional" className="block mb-1">age:</label>
-                        <input type="number" placeholder="age" name="age" className="w-full border border-gray-300 rounded-md px-3 py-2"
+                        <label htmlFor="age" className="block mb-1">Age:</label>
+                        <input type="number" placeholder="Age" name="age" className="w-full border border-gray-300 rounded-md px-3 py-2"
                             {...register("age")} />
                     </div>
                 </div>
 
                 <div className="flex gap-2">
                     <div className="mb-4">
-                        <label htmlFor="healthcareProfessional" className="block mb-1">Phone Number:</label>
+                        <label htmlFor="phoneNumber" className="block mb-1">Phone Number:</label>
                         <input type="number" placeholder="Phone Number" name="phoneNumber" className="w-full border border-gray-300 rounded-md px-3 py-2"
                             {...register("phoneNumber")} />
                     </div>
                     <div className="mb-4">
-                        <label htmlFor="healthcareProfessional" className="block mb-1">Emergency Contact:</label>
+                        <label htmlFor="emergencyContract" className="block mb-1">Emergency Contact:</label>
                         <input type="number" placeholder="Emergency Contact" name="emergencyContract" className="w-full border border-gray-300 rounded-md px-3 py-2"
                             {...register("emergencyContract")} />
                     </div>
-
                 </div>
 
-
                 <button onClick={closeModal} type="submit" className="w-full bg-green-500 text-white py-2 px-4 rounded-md">Join Now</button>
-
             </form>
-
+           
         </div>
     );
 };

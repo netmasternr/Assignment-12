@@ -1,9 +1,11 @@
 import { useForm } from "react-hook-form";
 import UseAxiosSecure from "../../../Hooks/AxiosSecure/AxiosSecure";
 import Swal from "sweetalert2";
+import UseAuth from "../../../Hooks/useAuth/useAuth";
 
 const AddCamp = () => {
     const axiosSecure = UseAxiosSecure();
+    const {user}= UseAuth();
 
     const {
         register,
@@ -13,8 +15,10 @@ const AddCamp = () => {
     } = useForm()
 
     const onSubmit = async (data) => {
+        
         const addCamp = {
             campName: data.campName,
+            organizerEmail: user?.email,
             image: data.image,
             campFees: data.campFees,
             dateTime: data.dateTime,

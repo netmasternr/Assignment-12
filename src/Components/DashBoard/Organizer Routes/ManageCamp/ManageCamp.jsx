@@ -4,14 +4,17 @@ import { useQuery } from "@tanstack/react-query";
 import { MdDeleteForever } from "react-icons/md";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
+import UseAuth from "../../../Hooks/useAuth/useAuth";
 
 const ManageCamp = () => {
     const axiosSecure = UseAxiosSecure();
+    const {user} = UseAuth();
 
-    const { data: campsData = [], refetch } = useQuery({
+
+    const { data: campsData = [], refetch, isLoading } = useQuery({
         queryKey: ['camps'],
         queryFn: async () => {
-            const { data } = await axiosSecure.get('/addCamp');
+            const { data } = await axiosSecure.get(`/addCamp/manage/${user?.email}`);
             return data;
         }
     });
@@ -39,6 +42,8 @@ const ManageCamp = () => {
             refetch();
         });
     };
+
+    if(isLoading) return <p>loading</p>
 
     return (
         <div>
