@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import Payment from "../Payment/Payment";
 import UseAxiosSecure from "../../../Hooks/AxiosSecure/AxiosSecure";
+import FeedBackModal from "./FeedBackModal/FeedBackModal";
 
 const RegisteredCamps = () => {
     const axiosSecure = UseAxiosSecure();
@@ -13,6 +14,8 @@ const RegisteredCamps = () => {
     const { user } = UseAuth();
     const [isOpen, setIsOpen] = useState(false);
     const [selectedCamp, setSelectedCamp] = useState(null);
+    const [isFeedbackOpen, setIsFeedbackOpen] = useState(false)
+    const [feedbackData, setFeedbackData] = useState(null)
 
     const { data: myData = [], refetch } = useQuery({
         queryKey: ['myJoinData'],
@@ -58,8 +61,25 @@ const RegisteredCamps = () => {
         setSelectedCamp(null);
         refetch();
     };
+
+
+
+    // FeedBack btn modal open
+    const openFeedbackModal = (data) => {
+        setFeedbackData(data)
+        setIsFeedbackOpen(true)
+        refetch();
+    }
+
+    // FeedBack modal close
+    const closeFeedbackModal = () => {
+        setFeedbackData(null)
+        setIsFeedbackOpen(false)
+        refetch();
+    }
     refetch();
-    
+
+
     return (
         <div>
             <div className="overflow-x-auto">
@@ -114,7 +134,7 @@ const RegisteredCamps = () => {
 
 
                                 <Table.Cell>
-                                    <button className={`py-3 px-4 rounded-md text-white ${data.confirmationStatus === 'Confirmed' ? 'bg-red-600' : 'cursor-not-allowed bg-gray-400'}`}>
+                                    <button onClick={() => openFeedbackModal(data)} className={`py-3 px-4 rounded-md text-white ${data.confirmationStatus === 'Confirmed' ? 'bg-red-600' : 'cursor-not-allowed bg-gray-400'}`}>
 
                                         Feedback
 
@@ -126,7 +146,7 @@ const RegisteredCamps = () => {
                 </Table>
             </div>
 
-            <div className="">
+            <div>
                 {selectedCamp && (
                     <Payment
                         camp={selectedCamp}
@@ -135,6 +155,18 @@ const RegisteredCamps = () => {
                         isOpen={isOpen}
                     />
                 )}
+
+
+                <div>
+                    {/* feedback modal  */}
+                    <FeedBackModal
+                        isFeedbackOpen={isFeedbackOpen}
+                        data={feedbackData}
+                        refetch={refetch}
+                        closeFeedbackModal={closeFeedbackModal}
+                    />
+
+                </div>
             </div>
         </div>
     );
