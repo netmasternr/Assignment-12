@@ -5,12 +5,12 @@ import UseAxiosSecure from "../../../../Hooks/AxiosSecure/AxiosSecure";
 import UseAuth from "../../../../Hooks/useAuth/useAuth";
 import Swal from "sweetalert2";
 
-const CheckOutForm = ({ camp, closeModal, refetch }) => {
+const CheckOutForm = ({ camp, closeModal, refetch,  }) => {
 
     const { user } = UseAuth();
     const [error, setError] = useState('');
     const [clientSecret, setClientSecret] = useState('');
-    const [transactionId, setTransactionId] = useState('');
+    
     const stripe = useStripe();
     const elements = useElements();
     const axiosSecure = UseAxiosSecure();
@@ -69,7 +69,6 @@ const CheckOutForm = ({ camp, closeModal, refetch }) => {
         else {
 
             if (paymentIntent.status === 'succeeded') {
-                setTransactionId(paymentIntent.id);
                 // console.log(paymentIntent)
 
                 // now save the payment in db
@@ -94,11 +93,14 @@ const CheckOutForm = ({ camp, closeModal, refetch }) => {
                 // // for update status........... 
                 const updateStatus = {
                     paymentStatus: 'paid',
-                    confirmationStatus: 'confirmed',
+                    
                 }
 
                 const result = await axiosSecure.put(`/joinCamp/${camp?._id}`, updateStatus)
-                console.log(result.data)
+
+                const payStatus = await axiosSecure.patch(`/join/pay/${camp?._id}`)
+                console.log(payStatus)
+                
 
                 Swal.fire({
                     title: `Transaction id ${paymentIntent.id}`,

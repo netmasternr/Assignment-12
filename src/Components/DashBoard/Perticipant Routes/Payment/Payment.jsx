@@ -7,7 +7,7 @@ import CheckOutForm from './StripePayment/CheckOutForm';
 
 const stripePromise = loadStripe(import.meta.env.VITE_Payment_Gateway_Pk);
 
-const Payment = ({ camp, refetch, closeModal, isOpen }) => {
+const Payment = ({ camp, refetch, closeModal, isOpen, }) => {
     return (
         <div>
             <Transition appear show={isOpen} as={Fragment}>

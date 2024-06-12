@@ -32,10 +32,9 @@ const RegisteredCamps = () => {
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes, delete it!"
         }).then(async (result) => {
-            const res = await axiosSecure.delete(`/join/delete/${data?._id}`);
-
-            if (res.data.deletedCount > 0) {
-                if (result.isConfirmed) {
+            if (result.isConfirmed) {
+                const res = await axiosSecure.delete(`/join/delete/${data?._id}`);
+                if (res.data.deletedCount > 0) {
                     Swal.fire({
                         title: "Deleted!",
                         text: "Your file has been deleted.",
@@ -46,17 +45,21 @@ const RegisteredCamps = () => {
             refetch();
         });
     };
+    refetch();
 
     const openPaymentModal = (camp) => {
         setSelectedCamp(camp);
         setIsOpen(true);
+        refetch();
     };
 
     const closeModal = () => {
         setIsOpen(false);
         setSelectedCamp(null);
+        refetch();
     };
-
+    refetch();
+    
     return (
         <div>
             <div className="overflow-x-auto">
@@ -76,30 +79,46 @@ const RegisteredCamps = () => {
                     <Table.Body className="divide-y">
                         {myData.map((data, index) => (
                             <Table.Row key={data._id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                                <Table.Cell>{index+1}</Table.Cell>
-                                
+                                <Table.Cell>{index + 1}</Table.Cell>
+
                                 <Table.Cell>{data.campName}</Table.Cell>
-                                
+
                                 <Table.Cell>$ {data.campFees}</Table.Cell>
-                               
+
                                 <Table.Cell>{data.organizerEmail}</Table.Cell>
-                                
+
                                 <Table.Cell>{data.perticipantName || 'unknown'}</Table.Cell>
-                               
+
                                 <Table.Cell>
-                                    <button onClick={() => openPaymentModal(data)} className="p-2 rounded-md bg-orange-400 hover:bg-green-400 transition-transform duration-300 hover:scale-105 text-white">Pay</button>
-                                </Table.Cell>
-                                
-                                <Table.Cell>
-                                    <button className="p-2 rounded-md bg-gray-400 text-white">Pending</button>
+                                    <button onClick={() => openPaymentModal(data)} className={`py-3 px-4 rounded-md text-white ${data.paymentStatus === 'Paid' ? 'cursor-not-allowed bg-green-400' : 'bg-green-400'}`}
+                                        disabled={data.paymentStatus === 'Paid'}
+                                    >
+                                        {data.paymentStatus}
+                                    </button>
                                 </Table.Cell>
 
                                 <Table.Cell>
-                                    <button onClick={() => handleCancel(data)} className="p-2 rounded-md bg-gray-600 hover:bg-red-500 transition-transform duration-300 hover:scale-105 text-white">Cancel</button>
+                                    <button className="p-2 rounded-md bg-gray-400 text-white">{data.confirmationStatus} </button>
                                 </Table.Cell>
 
                                 <Table.Cell>
-                                    <button className="p-2 rounded-md bg-green-400 transition-transform duration-300 hover:scale-105 text-white">Feedback</button>
+                                    <button
+                                        onClick={() => handleCancel(data)}
+                                        className={`py-3 px-4 rounded-md text-white ${data.confirmationStatus === 'Confirmed' ? 'cursor-not-allowed bg-gray-400' : 'bg-red-600'
+                                            }`}
+                                        disabled={data.confirmationStatus === 'Confirmed'}
+                                    >
+                                        Cancel
+                                    </button>
+                                </Table.Cell>
+
+
+                                <Table.Cell>
+                                    <button className={`py-3 px-4 rounded-md text-white ${data.confirmationStatus === 'Confirmed' ? 'bg-red-600' : 'cursor-not-allowed bg-gray-400'}`}>
+
+                                        Feedback
+
+                                    </button>
                                 </Table.Cell>
                             </Table.Row>
                         ))}
@@ -109,7 +128,7 @@ const RegisteredCamps = () => {
 
             <div className="">
                 {selectedCamp && (
-                    <Payment 
+                    <Payment
                         camp={selectedCamp}
                         refetch={refetch}
                         closeModal={closeModal}

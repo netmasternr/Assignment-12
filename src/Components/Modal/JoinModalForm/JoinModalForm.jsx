@@ -19,7 +19,7 @@ const JoinModalForm = ({ campData, closeModal }) => {
     const onSubmit = async (data) => {
         // Check if the user is the organizer
         if (user.email === campData.organizerEmail) {
-            return  Swal.fire({
+            return Swal.fire({
                 position: "center",
                 icon: "error",
                 title: 'Organizer cannot join own camp',
@@ -31,6 +31,8 @@ const JoinModalForm = ({ campData, closeModal }) => {
         const JoinCampData = {
             organizerEmail: campData?.organizerEmail,
             campName: data.campName,
+            paymentStatus: 'Pay',
+            confirmationStatus: 'Pending',
             gender: data.gender,
             campFees: data.campFees,
             perticipantName: data.perticipantName,
@@ -160,7 +162,7 @@ const JoinModalForm = ({ campData, closeModal }) => {
 
                 <button onClick={closeModal} type="submit" className="w-full bg-green-500 text-white py-2 px-4 rounded-md">Join Now</button>
             </form>
-           
+
         </div>
     );
 };
