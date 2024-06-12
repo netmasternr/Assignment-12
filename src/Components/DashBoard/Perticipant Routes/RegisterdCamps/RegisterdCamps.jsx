@@ -1,14 +1,15 @@
 import { useState } from "react";
 import { Table } from "flowbite-react";
-import UseAxiosPublic from "../../../Hooks/UseAxiosPublic/UseAxiosPublic";
 import UseAuth from "../../../Hooks/useAuth/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import Payment from "../Payment/Payment";
+import UseAxiosSecure from "../../../Hooks/AxiosSecure/AxiosSecure";
 
 const RegisteredCamps = () => {
-    const axiosPublic = UseAxiosPublic();
+    const axiosSecure = UseAxiosSecure();
+
     const { user } = UseAuth();
     const [isOpen, setIsOpen] = useState(false);
     const [selectedCamp, setSelectedCamp] = useState(null);
@@ -16,7 +17,7 @@ const RegisteredCamps = () => {
     const { data: myData = [], refetch } = useQuery({
         queryKey: ['myJoinData'],
         queryFn: async () => {
-            const { data } = await axiosPublic.get(`/joinCamp/MyData/${user.email}`);
+            const { data } = await axiosSecure.get(`/joinCamp/MyData/${user.email}`);
             return data;
         }
     });
@@ -31,7 +32,7 @@ const RegisteredCamps = () => {
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes, delete it!"
         }).then(async (result) => {
-            const res = await axiosPublic.delete(`/join/delete/${data?._id}`);
+            const res = await axiosSecure.delete(`/join/delete/${data?._id}`);
 
             if (res.data.deletedCount > 0) {
                 if (result.isConfirmed) {
@@ -61,6 +62,7 @@ const RegisteredCamps = () => {
             <div className="overflow-x-auto">
                 <Table>
                     <Table.Head>
+                        <Table.HeadCell>index</Table.HeadCell>
                         <Table.HeadCell>Camp name</Table.HeadCell>
                         <Table.HeadCell>Camp Fees</Table.HeadCell>
                         <Table.HeadCell>Organizer email</Table.HeadCell>
@@ -72,11 +74,16 @@ const RegisteredCamps = () => {
                     </Table.Head>
 
                     <Table.Body className="divide-y">
-                        {myData.map(data => (
+                        {myData.map((data, index) => (
                             <Table.Row key={data._id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                                <Table.Cell>{index+1}</Table.Cell>
+                                
                                 <Table.Cell>{data.campName}</Table.Cell>
+                                
                                 <Table.Cell>$ {data.campFees}</Table.Cell>
+                               
                                 <Table.Cell>{data.organizerEmail}</Table.Cell>
+                                
                                 <Table.Cell>{data.perticipantName || 'unknown'}</Table.Cell>
                                
                                 <Table.Cell>
@@ -86,9 +93,11 @@ const RegisteredCamps = () => {
                                 <Table.Cell>
                                     <button className="p-2 rounded-md bg-gray-400 text-white">Pending</button>
                                 </Table.Cell>
+
                                 <Table.Cell>
                                     <button onClick={() => handleCancel(data)} className="p-2 rounded-md bg-gray-600 hover:bg-red-500 transition-transform duration-300 hover:scale-105 text-white">Cancel</button>
                                 </Table.Cell>
+
                                 <Table.Cell>
                                     <button className="p-2 rounded-md bg-green-400 transition-transform duration-300 hover:scale-105 text-white">Feedback</button>
                                 </Table.Cell>

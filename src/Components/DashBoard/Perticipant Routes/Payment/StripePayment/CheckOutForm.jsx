@@ -46,7 +46,7 @@ const CheckOutForm = ({ camp, closeModal, refetch }) => {
 
         if (paymentError) {
             setError(paymentError.message);
-            console.log(paymentError.message)
+            // console.log(paymentError.message)
         } else {
             // console.log('payment method', paymentMethod)
             setError('');
@@ -65,12 +65,40 @@ const CheckOutForm = ({ camp, closeModal, refetch }) => {
         if (confirmError) {
             setError(confirmError.message);
             // console.log(confirmError.message)
-        } 
+        }
         else {
 
             if (paymentIntent.status === 'succeeded') {
                 setTransactionId(paymentIntent.id);
                 // console.log(paymentIntent)
+
+                // now save the payment in db
+                const paymentsInfo = {
+                    PerticipantEmail: camp?.PerticipantEmail,
+                    organizerEmail: camp?.organizerEmail,
+                    campFees: camp?.campFees,
+                    paymentStatus: 'paid',
+                    confirmationStatus: 'confirmed',
+                    _id: camp?._id,
+                    campName: camp?.campName,
+                    perticipantName: camp?.perticipantName,
+                    location: camp?.location,
+                    transactionId: paymentIntent.id,
+                    date: new Date()
+                }
+                // console.log(paymentInfo)
+                // send payment to backend
+                const res = await axiosSecure.post('/payments', paymentsInfo)
+                // console.log('payment saved', res)
+
+                // // for update status........... 
+                const updateStatus = {
+                    paymentStatus: 'paid',
+                    confirmationStatus: 'confirmed',
+                }
+
+                const result = await axiosSecure.put(`/joinCamp/${camp?._id}`, updateStatus)
+                console.log(result.data)
 
                 Swal.fire({
                     title: `Transaction id ${paymentIntent.id}`,
@@ -81,6 +109,7 @@ const CheckOutForm = ({ camp, closeModal, refetch }) => {
                 refetch();
             }
         }
+
     };
 
     return (
@@ -110,7 +139,7 @@ const CheckOutForm = ({ camp, closeModal, refetch }) => {
                 >
                     Pay
                 </button>
-                {transactionId && <p>{transactionId} </p>}
+                
             </div>
         </form>
     );

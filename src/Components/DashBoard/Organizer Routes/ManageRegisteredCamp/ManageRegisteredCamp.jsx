@@ -2,17 +2,21 @@ import { Table } from "flowbite-react";
 import UseAxiosSecure from "../../../Hooks/AxiosSecure/AxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
+import UseAuth from "../../../Hooks/useAuth/useAuth";
 
 const ManageRegisteredCamp = () => {
     const axiosSecure = UseAxiosSecure();
+    const { user } = UseAuth();
 
     const { data: joinData = [], refetch } = useQuery({
         queryKey: ['registeredCamp'],
         queryFn: async () => {
-            const { data } = await axiosSecure.get('/joinCamp')
+            const { data } = await axiosSecure.get(`/joinCamp/${user?.email}`)
             return data;
         }
     })
+
+    // console.log(joinData)
 
     const handleCancel = data => {
         Swal.fire({
@@ -25,7 +29,7 @@ const ManageRegisteredCamp = () => {
             confirmButtonText: "Yes, delete it!"
         }).then(async (result) => {
             const res = await axiosSecure.delete(`/manageRegisteredCamp/${data?._id}`)
- 
+
             if (res.data.deletedCount > 0) {
                 if (result.isConfirmed) {
                     Swal.fire({
@@ -46,6 +50,7 @@ const ManageRegisteredCamp = () => {
             <div className="overflow-x-auto">
                 <Table>
                     <Table.Head>
+                        <Table.HeadCell>index</Table.HeadCell>
                         <Table.HeadCell>Participant Name</Table.HeadCell>
                         <Table.HeadCell>Camp name</Table.HeadCell>
                         <Table.HeadCell>camp fees</Table.HeadCell>
@@ -63,14 +68,19 @@ const ManageRegisteredCamp = () => {
 
                     <Table.Body className="divide-y">
                         {
-                            joinData.map(data => <Table.Row key={data._id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                            joinData.map((data, index) => <Table.Row key={data._id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
 
-                                <Table.Cell>{data.perticipantName} </Table.Cell>
+                                <Table.Cell>{index + 1} </Table.Cell>
+
+                                <Table.Cell>{data.perticipantName || 'anonymous'} </Table.Cell>
                                 <Table.Cell>{data.campName} </Table.Cell>
                                 <Table.Cell>$ {data.campFees} </Table.Cell>
 
                                 <Table.Cell>
-                                    paid
+                                    <p className={`${data.paymentStatus ? 'bg-green-400 p-2 rounded-md text-white text-center ' : ' '}`}>
+                                        {data.paymentStatus || 'Pending'}
+
+                                    </p>
                                 </Table.Cell>
 
                                 <Table.Cell>
@@ -78,13 +88,16 @@ const ManageRegisteredCamp = () => {
                                 </Table.Cell>
 
                                 <Table.Cell>
-                                    <button onClick={() => handleCancel(data)} className="py-2 px-4 rounded-md bg-red-700 transition-transform duration-300 hover:scale-110 text-white">
+                                    <button
+                                        onClick={() => handleCancel(data)}
+                                        className={`bg-gray-400 py-3 px-4 rounded-md text-white ${data.paymentStatus ? 'cursor-not-allowed ' : 'bg-red-600 py-3 px-4 rounded-md text-white'}`}
+                                        disabled={data.paymentStatus ? true : false }
+                                    >
                                         X
                                     </button>
                                 </Table.Cell>
                             </Table.Row>)
                         }
-
 
 
                     </Table.Body>
