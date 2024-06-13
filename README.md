@@ -1,8 +1,20 @@
-# React + Vite
+live-Link: https://assignment-12-8bd27.web.app/
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+Organizer email: zoburirif@mailinator.com
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Organizer password: nabin123$
+
+
+special feathers of this website
+
+* 1. Environment variable
+* 2. eye-catching logo
+* 3. jwt for secure user
+* 4. tran-stack query
+* 5. organizer and perticipant role
+* 6. responsive dashboard
+* 7. dynamic title
+* 8. modal system 
+* 9. interceptors
+* 10. payment getaway (stripe)

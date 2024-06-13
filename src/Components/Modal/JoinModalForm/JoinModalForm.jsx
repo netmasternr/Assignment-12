@@ -5,7 +5,7 @@ import UseAxiosPublic from "../../Hooks/UseAxiosPublic/UseAxiosPublic";
 import Swal from "sweetalert2";
 import toast, { Toaster } from 'react-hot-toast';
 
-const JoinModalForm = ({ campData, closeModal }) => {
+const JoinModalForm = ({ campData, closeModal, refetch }) => {
     const { user } = UseAuth();
     const axiosPublic = UseAxiosPublic();
 
@@ -61,7 +61,7 @@ const JoinModalForm = ({ campData, closeModal }) => {
                 // perticipant count upset
                 const result = await axiosPublic.patch(`/perticipantCount/${campData._id}`, campData)
 
-                console.log(reset)
+                refetch()
 
             } else {
                 toast.error('Failed to join the camp.');
@@ -69,10 +69,10 @@ const JoinModalForm = ({ campData, closeModal }) => {
         } catch (error) {
             toast.error('Failed to join the camp.');
         }
-
-
-
+        
     };
+
+   
 
     return (
         <div>

@@ -12,7 +12,7 @@ import FeedbackCard from "./FeedbackCard/FeedbackCard";
 const Home = () => {
     const axiosPublic = UseAxiosPublic()
 
-    const { data: campsData = [], isLoading } = useQuery({
+    const { data: campsData = [], isLoading, refetch } = useQuery({
         queryKey: ['camps'],
         queryFn: async () => {
             const { data } = await axiosPublic.get('/addCamp')
@@ -32,6 +32,8 @@ const Home = () => {
             <Spinner aria-label="Right-aligned spinner example" />
         </div>
     </div>;
+    
+    refetch()
 
     return (
         <div>

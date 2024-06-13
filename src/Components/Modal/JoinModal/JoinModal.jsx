@@ -9,7 +9,7 @@ import {
 import { Fragment } from 'react'
 import JoinModalForm from '../JoinModalForm/JoinModalForm';
 
-const JoinModal = ({ closeModal, isOpen, campData}) => {
+const JoinModal = ({ closeModal, isOpen, campData, refetch}) => {
 
 
     return (
@@ -47,29 +47,17 @@ const JoinModal = ({ closeModal, isOpen, campData}) => {
                                 </DialogTitle>
                                 
                                 
-                                
+                            
                                 <JoinModalForm
                                 campData={campData}
+                                refetch={refetch}
                                 closeModal={closeModal}
                                  />
 
-                                {/* join form  */}
-                                {/* <div className='mt-2 w-full'>
-                                <JoinModalForm
-                                    camps={camps}
-                                    register={register}
-                                    handleSubmit={handleSubmit}
-                                    handlebtn={handlebtn} />
-                            </div> */}
+                                
 
                                 <hr className='mt-5 ' />
 
-                                {/* <Elements stripe={stripePromise}>
-                                <CheckoutForm
-                                    refetch={refetch}
-                                    closeModal={closeModal}
-                                    bookingInfo={bookingInfo} />
-                            </Elements> */}
                             </DialogPanel>
                         </TransitionChild>
                     </div>

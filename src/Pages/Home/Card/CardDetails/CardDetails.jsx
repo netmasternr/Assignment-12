@@ -25,6 +25,8 @@ const CardDetails = () => {
         setIsOpen(false)
     }
 
+    refetch();
+
     return (
         <div className="pt-16 mb-5 max-w-4xl mx-auto overflow-hidden bg-white rounded-lg pb-3 shadow-md">
             <div>

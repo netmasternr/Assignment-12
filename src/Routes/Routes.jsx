@@ -92,7 +92,7 @@ const router = createBrowserRouter([
         element: <AdminRoute>
           <UpdateCamp />
         </AdminRoute>,
-        loader: ({params})=> fetch(`http://localhost:5000/addCamp/update/${params.id}`, {
+        loader: ({params})=> fetch(`https://assignment12-server-lilac-six.vercel.app/addCamp/update/${params.id}`, {
           headers:{ 'Authorization': 'Bearer '+  localStorage.getItem('access-token') }
         })  
       },
