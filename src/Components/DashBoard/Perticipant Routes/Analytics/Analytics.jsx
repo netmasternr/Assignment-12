@@ -18,7 +18,7 @@ const Analytics = () => {
             return res.data
         }
     })
-    console.log(analytic)
+  
 
 
 
@@ -38,7 +38,7 @@ const Analytics = () => {
 
     return (
         <div>
-            <h1 className="text-center"> analytics Chart</h1>
+            <h1 className="text-center mb-10"> analytics Chart</h1>
 
             <div>
                 <BarChart

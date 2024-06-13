@@ -2,10 +2,12 @@ import { useForm } from "react-hook-form";
 import UseAxiosSecure from "../../../Hooks/AxiosSecure/AxiosSecure";
 import Swal from "sweetalert2";
 import UseAuth from "../../../Hooks/useAuth/useAuth";
+import { useNavigate } from "react-router-dom";
 
 const AddCamp = () => {
     const axiosSecure = UseAxiosSecure();
-    const {user}= UseAuth();
+    const { user } = UseAuth();
+    const navigate = useNavigate()
 
     const {
         register,
@@ -15,7 +17,7 @@ const AddCamp = () => {
     } = useForm()
 
     const onSubmit = async (data) => {
-        
+
         const addCamp = {
             campName: data.campName,
             organizerEmail: user?.email,
@@ -39,7 +41,8 @@ const AddCamp = () => {
                 showConfirmButton: false,
                 timer: 1500
             });
-            
+            navigate('/dashboard/manageCamp')
+
         }
         // console.log(res.data)
     }
@@ -87,6 +90,7 @@ const AddCamp = () => {
                 <div className="mb-4">
                     <label htmlFor="participantCount" className="block mb-1">Participant Count:</label>
                     <input type="number" placeholder="number"
+                        disabled
                         defaultValue={0}
                         name="participantCount" className="w-full border border-gray-300 rounded-md px-3 py-2" required
                         {...register("participantCount")} />

@@ -57,12 +57,21 @@ const JoinModalForm = ({ campData, closeModal }) => {
                     showConfirmButton: false,
                     timer: 1500
                 });
+
+                // perticipant count upset
+                const result = await axiosPublic.patch(`/perticipantCount/${campData._id}`, campData)
+
+                console.log(reset)
+
             } else {
                 toast.error('Failed to join the camp.');
             }
         } catch (error) {
             toast.error('Failed to join the camp.');
         }
+
+
+
     };
 
     return (
