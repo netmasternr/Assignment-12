@@ -1,11 +1,12 @@
 import { useForm } from "react-hook-form";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import UseAxiosSecure from "../../../Hooks/AxiosSecure/AxiosSecure";
 
 const UpdateCamp = () => {
     const camp = useLoaderData();
     const axiosSecure = UseAxiosSecure();
     // console.log(camp)
+    const navigate = useNavigate();
 
     const {
         register,
@@ -24,7 +25,8 @@ const UpdateCamp = () => {
         // now send data to server
         const res = await axiosSecure.patch(`/addCamp/update/${camp._id}`,updateCamp)
 
-        console.log(res.data)
+        // console.log(res.data)
+        navigate('/dashboard/manageCamp')
 
     }
 

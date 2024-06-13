@@ -1,13 +1,16 @@
 /* eslint-disable react/prop-types */
 import { useForm } from "react-hook-form";
+import { FaStar } from "react-icons/fa";
 import UseAuth from "../../../../../Hooks/useAuth/useAuth";
 import UseAxiosSecure from "../../../../../Hooks/AxiosSecure/AxiosSecure";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
+import { useState } from "react";
 
 const FeedbackForm = ({ closeFeedbackModal, data }) => {
     const { user } = UseAuth();
     const axiosSecure = UseAxiosSecure();
+    const [rating, setRating] = useState(0);
 
     const {
         register,
@@ -15,12 +18,12 @@ const FeedbackForm = ({ closeFeedbackModal, data }) => {
         formState: { errors }
     } = useForm();
 
-
     const onSubmit = async (data) => {
         const feedbackInfo = {
             name: data.name,
             email: data.email,
             message: data.message,
+            rating: rating,
             image: user.photoURL
         }
 
@@ -88,7 +91,26 @@ const FeedbackForm = ({ closeFeedbackModal, data }) => {
                     />
                 </div>
 
-                <div className="flex items-center justify-between">
+                <div className="mb-6">
+                    <label className="block text-gray-700 text-md font-bold mb-2 text-center" htmlFor="rating">
+                        Rating
+                    </label>
+                    <div className="flex space-x-2 justify-center">
+                        {[1, 2, 3, 4, 5].map((star) => (
+                            <button
+                                key={star}
+                                type="button"
+                                onClick={() => setRating(star)}
+                                className={`text-gray-400 text-2xl ${star <= rating ? "text-yellow-400" : ""}`}
+                            >
+                                <FaStar />
+                            </button>
+                        ))}
+                    </div>
+                    {errors.rating && <p className="text-red-500 text-xs italic">Please select a rating.</p>}
+                </div>
+
+                <div className="flex items-center justify-center mt-10 ">
                     <button onClick={closeFeedbackModal}
                         className="bg-gray-500 hover:bg-orange-400 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                         type="submit"
@@ -98,7 +120,6 @@ const FeedbackForm = ({ closeFeedbackModal, data }) => {
                 </div>
             </form>
         </div>
-
     );
 };
 

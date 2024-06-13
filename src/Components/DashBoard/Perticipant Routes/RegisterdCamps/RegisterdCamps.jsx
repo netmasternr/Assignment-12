@@ -134,7 +134,8 @@ const RegisteredCamps = () => {
 
 
                                 <Table.Cell>
-                                    <button onClick={() => openFeedbackModal(data)} className={`py-3 px-4 rounded-md text-white ${data.confirmationStatus === 'Confirmed' ? 'bg-red-600' : 'cursor-not-allowed bg-gray-400'}`}>
+                                    <button onClick={() => openFeedbackModal(data)} className={`py-3 px-4 rounded-md text-white ${data.confirmationStatus === 'Confirmed' ? 'bg-red-600' : 'cursor-not-allowed bg-gray-400'}`}
+                                         disabled={data.confirmationStatus === 'Pending'}>
 
                                         Feedback
 

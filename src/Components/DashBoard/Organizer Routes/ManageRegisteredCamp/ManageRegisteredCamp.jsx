@@ -36,11 +36,13 @@ const ManageRegisteredCamp = () => {
                 refetch();
             }
         });
-    };
 
+    };
+    refetch();
+    
     const toggleConfirmed = async (_id) => {
         const res = await axiosSecure.patch(`/join/confirm/${_id}`)
-        refetch();   
+        refetch();
     }
 
 
@@ -69,11 +71,11 @@ const ManageRegisteredCamp = () => {
                                 </p>
                             </Table.Cell>
 
-                          
+
                             <Table.Cell>
-                                <button onClick={() => toggleConfirmed(data._id)} className={`py-3 px-4 rounded-md text-white ${data.confirmationStatus==='Confirmed' ? 'cursor-not-allowed bg-green-400' : 'bg-gray-400'}`}
-                                disabled={data.paymentStatus !== 'Paid'}
-                                     >
+                                <button onClick={() => toggleConfirmed(data._id)} className={`py-3 px-4 rounded-md text-white ${data.confirmationStatus === 'Confirmed' ? 'cursor-not-allowed bg-green-400' : 'bg-gray-400'}`}
+                                    disabled={data.paymentStatus !== 'Paid'}
+                                >
 
                                     {data.confirmationStatus}
 
@@ -86,8 +88,8 @@ const ManageRegisteredCamp = () => {
                             <Table.Cell>
                                 <button
                                     onClick={() => handleCancel(data)}
-                                    className={`py-3 px-4 rounded-md text-white ${data.confirmationStatus==='Confirmed' ? 'cursor-not-allowed bg-gray-400' : 'bg-red-600'}`}
-                                    disabled={data.confirmationStatus==='Confirmed'}
+                                    className={`py-3 px-4 rounded-md text-white ${data.confirmationStatus === 'Confirmed' ? 'cursor-not-allowed bg-gray-400' : 'bg-red-600'}`}
+                                    disabled={data.confirmationStatus === 'Confirmed'}
                                 >
                                     X
                                 </button>
