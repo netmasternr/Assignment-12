@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { Table } from "flowbite-react";
 import UseAxiosSecure from "../../../Hooks/AxiosSecure/AxiosSecure";
 import UseAuth from "../../../Hooks/useAuth/useAuth";
@@ -8,13 +7,16 @@ const PaymentHistory = () => {
     const axiosSecure = UseAxiosSecure();
     const { user } = UseAuth();
 
-    const { data: payments = [] } = useQuery({
+    const { data: payments = [], refetch } = useQuery({
         queryKey: ['payments', user?.email],
         queryFn: async () => {
             const res = await axiosSecure.get(`/payments/${user?.email}`)
             return res.data
         }
     })
+    refetch();
+
+
 
     return (
         <div>
@@ -22,7 +24,7 @@ const PaymentHistory = () => {
                 <Table>
                     <Table.Head>
                         <Table.HeadCell>
-                           index
+                            index
                         </Table.HeadCell>
                         <Table.HeadCell>
                             Camp name
@@ -43,36 +45,39 @@ const PaymentHistory = () => {
 
                     <Table.Body className="divide-y">
                         {
-                            payments.map((payment, index)=> <Table.Row 
+                            payments.map((payment, index) => <Table.Row
                                 key={payment._id}
-                            className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                                className="bg-white dark:border-gray-700 dark:bg-gray-800">
 
                                 <Table.Cell>
-                                   {index+1}
+                                    {index + 1}
                                 </Table.Cell>
 
                                 <Table.Cell>
-                                   {payment.campName}
+                                    {payment.campName}
                                 </Table.Cell>
-    
+
                                 <Table.Cell>
                                     $ {payment.campFees}
                                 </Table.Cell>
-    
+
                                 <Table.Cell>
                                     <button className="bg-green-400 px-3 py-2 rounded-md text-white font-bold">
-                                    {payment.paymentStatus}
+                                        {payment.paymentStatus}
                                     </button>
                                 </Table.Cell>
-    
+
                                 <Table.Cell>
-                                    confirmed
+                                <button className="bg-green-400 px-3 py-2 rounded-md text-white font-bold">
+                                        confirmed
+                                    </button>
+
                                 </Table.Cell>
 
                                 <Table.Cell>
                                     {payment.transactionId}
                                 </Table.Cell>
-    
+
                             </Table.Row>)
                         }
                     </Table.Body>

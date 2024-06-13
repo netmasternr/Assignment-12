@@ -39,10 +39,18 @@ const ManageRegisteredCamp = () => {
 
     };
     refetch();
-    
+
+
+    // update confirmation status
     const toggleConfirmed = async (_id) => {
         const res = await axiosSecure.patch(`/join/confirm/${_id}`)
         refetch();
+
+        // for payment history
+        const result = await axiosSecure.patch(`/paymentHistory/pay/${_id}`)
+
+        // console.log(result.data)
+
     }
 
 

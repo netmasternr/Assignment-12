@@ -13,7 +13,7 @@ const FeedbackCard = () => {
             return data
         }
     })
-    console.log(feedbacks)
+    
 
     return (
         <div>
@@ -33,7 +33,7 @@ const FeedbackCard = () => {
 
                                 </div>
                             </div>
-                            <div className="flex items-center space-x-2 dark:text-yellow-700">
+                            <div className="flex items-center  space-x-2 dark:text-yellow-700">
                                 <LiaStarSolid />
                                 <span className="text-xl font-bold">{feedback.rating} </span>
                             </div>

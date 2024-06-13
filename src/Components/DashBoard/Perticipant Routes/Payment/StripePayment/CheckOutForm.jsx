@@ -77,8 +77,7 @@ const CheckOutForm = ({ camp, closeModal, refetch,  }) => {
                     organizerEmail: camp?.organizerEmail,
                     campFees: camp?.campFees,
                     paymentStatus: 'paid',
-                    confirmationStatus: 'confirmed',
-                    _id: camp?._id,
+                    confirmationStatus: 'Pending',
                     campName: camp?.campName,
                     perticipantName: camp?.perticipantName,
                     location: camp?.location,
@@ -99,7 +98,7 @@ const CheckOutForm = ({ camp, closeModal, refetch,  }) => {
                 const result = await axiosSecure.put(`/joinCamp/${camp?._id}`, updateStatus)
 
                 const payStatus = await axiosSecure.patch(`/join/pay/${camp?._id}`)
-                console.log(payStatus)
+                // console.log(payStatus)
                 
 
                 Swal.fire({

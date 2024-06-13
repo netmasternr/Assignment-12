@@ -118,7 +118,7 @@ const RegisteredCamps = () => {
                                 </Table.Cell>
 
                                 <Table.Cell>
-                                    <button className="p-2 rounded-md bg-gray-400 text-white">{data.confirmationStatus} </button>
+                                    <button className={`py-3 px-4 rounded-md text-white ${data.confirmationStatus === 'Confirmed' ? 'cursor-not-allowed bg-green-400' : 'bg-gray-400'}`}>{data.confirmationStatus} </button>
                                 </Table.Cell>
 
                                 <Table.Cell>
