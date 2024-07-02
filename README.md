@@ -1,3 +1,9 @@
+to run this project
+1. npm i
+2. add your firebase token in firebase.config.js
+3. npm run dev
+
+
 live-Link: https://assignment-12-8bd27.web.app/
 
 
